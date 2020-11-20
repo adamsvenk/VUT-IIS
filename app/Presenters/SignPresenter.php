@@ -16,14 +16,10 @@ final class SignPresenter extends BasePresenter
 	/** @var Forms\SignInFormFactory */
 	private $signInFactory;
 
-	/** @var Forms\SignUpFormFactory */
-	private $signUpFactory;
 
-
-	public function __construct(Forms\SignInFormFactory $signInFactory, Forms\SignUpFormFactory $signUpFactory)
+	public function __construct(Forms\SignInFormFactory $signInFactory)
 	{
 		$this->signInFactory = $signInFactory;
-		$this->signUpFactory = $signUpFactory;
 	}
 
 
@@ -37,18 +33,6 @@ final class SignPresenter extends BasePresenter
 			$this->redirect('Homepage:');
 		});
 	}
-
-
-	/**
-	 * Sign-up form factory.
-	 */
-	protected function createComponentSignUpForm(): Form
-	{
-		return $this->signUpFactory->create(function (): void {
-			$this->redirect('Homepage:');
-		});
-	}
-
 
 	public function actionOut(): void
 	{

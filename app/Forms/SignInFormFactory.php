@@ -13,23 +13,19 @@ final class SignInFormFactory
 {
 	use Nette\SmartObject;
 
-	/** @var FormFactory */
-	private $factory;
-
 	/** @var User */
 	private $user;
 
 
-	public function __construct(FormFactory $factory, User $user)
+	public function __construct(User $user)
 	{
-		$this->factory = $factory;
 		$this->user = $user;
 	}
 
 
 	public function create(callable $onSuccess): Form
 	{
-		$form = $this->factory->create();
+		$form = new Form();
 		$form->addText('username', 'Username:')
 			->setRequired('Please enter your username.');
 
