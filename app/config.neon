@@ -25,3 +25,4 @@ services:
 	- App\Model\UserManager
 	- App\Forms\SignInFormFactory
 	router: App\Router\RouterFactory::createRouter
+	- App\Model\UserService

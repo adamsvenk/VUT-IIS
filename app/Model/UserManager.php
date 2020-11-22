@@ -22,7 +22,7 @@ final class UserManager implements Nette\Security\IAuthenticator
 	public const ROLE_PATIENT = 'patient';
 
 	private const
-		TABLE_NAME = 'user',
+		TABLE_NAME = 'User',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
