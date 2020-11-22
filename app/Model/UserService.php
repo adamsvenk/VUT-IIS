@@ -2,16 +2,23 @@
 
 namespace App\Model;
 
+use InvalidArgumentException;
 use Nette\Database\Context;
+use Nette\Security\Passwords;
+use stdClass;
 
 class UserService
 {
     /** @var Context  */
     private $db;
 
-    public function __construct(Context $db)
+    /** @var Passwords */
+    private $passwords;
+
+    public function __construct(Context $db, Passwords $passwords)
     {
         $this->db = $db;
+        $this->passwords = $passwords;
     }
 
 
@@ -41,9 +48,35 @@ class UserService
         $user = $this->db->table('User')->get($userId);
 
         if ($user === null) {
-            throw new \InvalidArgumentException('User not found');
+            throw new InvalidArgumentException('User not found');
         }
 
-        $this->db->table('User')->where('id', $userId);
+        $this->db->table('User')->where('id', $userId)->delete();
+    }
+
+
+    public function create(stdClass $values)
+    {
+        $this->db->table('User')->insert([
+            'username' => $values->username,
+            'password' => $this->passwords->hash($values->password),
+            'role' => $values->role,
+            'Full_name' => $values->fullName,
+            'Date_of_birth' => Utils::dateStringToObject($values->date),
+            'Function' => $values->function,
+        ]);
+    }
+
+
+    public static function roles()
+    {
+        $roles = [
+            UserManager::ROLE_PATIENT,
+            UserManager::ROLE_DOCTOR,
+            UserManager::ROLE_INSURANCE_WORKER,
+            UserManager::ROLE_ADMIN,
+        ];
+
+        return array_combine($roles, $roles);
     }
 }
