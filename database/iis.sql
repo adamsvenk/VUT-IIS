@@ -15,28 +15,19 @@ CREATE SCHEMA IF NOT EXISTS `iis` DEFAULT CHARACTER SET utf8 ;
 USE `iis` ;
 
 -- -----------------------------------------------------
--- Table `iis`.`Patient`
+-- Table `iis`.`User`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `iis`.`Patient` ;
+DROP TABLE IF EXISTS `iis`.`User` ;
 
-CREATE TABLE IF NOT EXISTS `iis`.`Patient` (
-  `idPatient` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `iis`.`User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `role` ENUM('admin', 'insuranceWorker', 'doctor', 'patient') NULL,
   `Full_name` VARCHAR(45) NULL,
-  `Date_of_birht` DATE NULL,
-  PRIMARY KEY (`idPatient`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `iis`.`Doctor`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `iis`.`Doctor` ;
-
-CREATE TABLE IF NOT EXISTS `iis`.`Doctor` (
-  `idDoctor` INT NOT NULL,
-  `Full_name` VARCHAR(45) NULL,
+  `Date_of_birth` DATE NULL,
   `Function` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDoctor`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -46,27 +37,19 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `iis`.`Health_problem` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Health_problem` (
-  `idHealth_problem` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(100) NULL,
-  `Description` VARCHAR(45) NULL,
-  `Patient_idPatient` INT NOT NULL,
-  `Doctor_idDoctor` INT NOT NULL,
-  PRIMARY KEY (`idHealth_problem`),
-  CONSTRAINT `fk_Health_problem_Patient`
-    FOREIGN KEY (`Patient_idPatient`)
-    REFERENCES `iis`.`Patient` (`idPatient`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Health_problem_Doctor1`
-    FOREIGN KEY (`Doctor_idDoctor`)
-    REFERENCES `iis`.`Doctor` (`idDoctor`)
+  `Description` VARCHAR(300) NULL,
+  `User_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Health_problem_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `iis`.`User` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Health_problem_Patient_idx` ON `iis`.`Health_problem` (`Patient_idPatient` ASC);
-
-CREATE INDEX `fk_Health_problem_Doctor1_idx` ON `iis`.`Health_problem` (`Doctor_idDoctor` ASC);
+CREATE INDEX `fk_Health_problem_User1_idx` ON `iis`.`Health_problem` (`User_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -75,16 +58,19 @@ CREATE INDEX `fk_Health_problem_Doctor1_idx` ON `iis`.`Health_problem` (`Doctor_
 DROP TABLE IF EXISTS `iis`.`Health_report` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Health_report` (
-  `Health_problem_idHealth_problem` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Text` VARCHAR(1000) NULL,
   `Picture` BLOB NULL,
-  PRIMARY KEY (`Health_problem_idHealth_problem`),
+  `Health_problem_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Health_report_Health_problem1`
-    FOREIGN KEY (`Health_problem_idHealth_problem`)
-    REFERENCES `iis`.`Health_problem` (`idHealth_problem`)
+    FOREIGN KEY (`Health_problem_id`)
+    REFERENCES `iis`.`Health_problem` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE INDEX `fk_Health_report_Health_problem1_idx` ON `iis`.`Health_report` (`Health_problem_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -93,26 +79,26 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `iis`.`Examination_request` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Examination_request` (
-  `Health_problem_idHealth_problem` INT NOT NULL,
-  `idExamination_request` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `State` VARCHAR(45) NULL,
-  `Doctor_idDoctor` INT NOT NULL,
-  PRIMARY KEY (`Health_problem_idHealth_problem`, `idExamination_request`),
+  `Health_problem_id` INT NOT NULL,
+  `User_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Examination_request_Health_problem1`
-    FOREIGN KEY (`Health_problem_idHealth_problem`)
-    REFERENCES `iis`.`Health_problem` (`idHealth_problem`)
+    FOREIGN KEY (`Health_problem_id`)
+    REFERENCES `iis`.`Health_problem` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Examination_request_Doctor1`
-    FOREIGN KEY (`Doctor_idDoctor`)
-    REFERENCES `iis`.`Doctor` (`idDoctor`)
+  CONSTRAINT `fk_Examination_request_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `iis`.`User` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Examination_request_Health_problem1_idx` ON `iis`.`Examination_request` (`Health_problem_idHealth_problem` ASC);
+CREATE INDEX `fk_Examination_request_Health_problem1_idx` ON `iis`.`Examination_request` (`Health_problem_id` ASC);
 
-CREATE INDEX `fk_Examination_request_Doctor1_idx` ON `iis`.`Examination_request` (`Doctor_idDoctor` ASC);
+CREATE INDEX `fk_Examination_request_User1_idx` ON `iis`.`Examination_request` (`User_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -121,40 +107,27 @@ CREATE INDEX `fk_Examination_request_Doctor1_idx` ON `iis`.`Examination_request`
 DROP TABLE IF EXISTS `iis`.`Medical_procedure` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Medical_procedure` (
-  `idMedical_procedure` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Type_of_procedure` VARCHAR(100) NULL,
   `Execution_date` DATETIME NULL,
-  `Examination_request_Health_problem_idHealth_problem` INT NOT NULL,
   `Examination_request_idExamination_request` INT NOT NULL,
-  `Doctor_idDoctor` INT NOT NULL,
-  PRIMARY KEY (`idMedical_procedure`),
+  `User_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Medical_procedure_Examination_request1`
-    FOREIGN KEY (`Examination_request_Health_problem_idHealth_problem` , `Examination_request_idExamination_request`)
-    REFERENCES `iis`.`Examination_request` (`Health_problem_idHealth_problem` , `idExamination_request`)
+    FOREIGN KEY (`Examination_request_idExamination_request`)
+    REFERENCES `iis`.`Examination_request` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Medical_procedure_Doctor1`
-    FOREIGN KEY (`Doctor_idDoctor`)
-    REFERENCES `iis`.`Doctor` (`idDoctor`)
+  CONSTRAINT `fk_Medical_procedure_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `iis`.`User` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Medical_procedure_Examination_request1_idx` ON `iis`.`Medical_procedure` (`Examination_request_Health_problem_idHealth_problem` ASC, `Examination_request_idExamination_request` ASC);
+CREATE INDEX `fk_Medical_procedure_Examination_request1_idx` ON `iis`.`Medical_procedure` (`Examination_request_idExamination_request` ASC);
 
-CREATE INDEX `fk_Medical_procedure_Doctor1_idx` ON `iis`.`Medical_procedure` (`Doctor_idDoctor` ASC);
-
-
--- -----------------------------------------------------
--- Table `iis`.`Insurance_worker`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `iis`.`Insurance_worker` ;
-
-CREATE TABLE IF NOT EXISTS `iis`.`Insurance_worker` (
-  `idInsurance_worker` INT NOT NULL,
-  `Full_name` VARCHAR(45) NULL,
-  PRIMARY KEY (`idInsurance_worker`))
-ENGINE = InnoDB;
+CREATE INDEX `fk_Medical_procedure_User1_idx` ON `iis`.`Medical_procedure` (`User_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -163,31 +136,26 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `iis`.`Payment` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Payment` (
-  `Medical_procedure_idMedical_procedure` INT NOT NULL,
-  `Insurance_worker_idInsurance_worker` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `Amount` INT NULL,
-  `Doctor_idDoctor` INT NOT NULL,
-  PRIMARY KEY (`Medical_procedure_idMedical_procedure`),
+  `User_id` INT NOT NULL,
+  `Medical_procedure_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Payment_User1`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `iis`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Payment_Medical_procedure1`
-    FOREIGN KEY (`Medical_procedure_idMedical_procedure`)
-    REFERENCES `iis`.`Medical_procedure` (`idMedical_procedure`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Payment_Insurance_worker1`
-    FOREIGN KEY (`Insurance_worker_idInsurance_worker`)
-    REFERENCES `iis`.`Insurance_worker` (`idInsurance_worker`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Payment_Doctor1`
-    FOREIGN KEY (`Doctor_idDoctor`)
-    REFERENCES `iis`.`Doctor` (`idDoctor`)
+    FOREIGN KEY (`Medical_procedure_id`)
+    REFERENCES `iis`.`Medical_procedure` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Payment_Insurance_worker1_idx` ON `iis`.`Payment` (`Insurance_worker_idInsurance_worker` ASC);
+CREATE INDEX `fk_Payment_User1_idx` ON `iis`.`Payment` (`User_id` ASC);
 
-CREATE INDEX `fk_Payment_Doctor1_idx` ON `iis`.`Payment` (`Doctor_idDoctor` ASC);
+CREATE INDEX `fk_Payment_Medical_procedure1_idx` ON `iis`.`Payment` (`Medical_procedure_id` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
