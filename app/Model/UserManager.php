@@ -16,6 +16,11 @@ final class UserManager implements Nette\Security\IAuthenticator
 {
 	use Nette\SmartObject;
 
+	public const ROLE_ADMIN = 'admin';
+	public const ROLE_INSURANCE_WORKER = 'insuranceWorker';
+	public const ROLE_DOCTOR = 'doctor';
+	public const ROLE_PATIENT = 'patient';
+
 	private const
 		TABLE_NAME = 'user',
 		COLUMN_ID = 'id',
