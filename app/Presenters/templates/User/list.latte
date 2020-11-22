@@ -2,7 +2,7 @@
     <table>
         <tr n:foreach="$users as $userArray">
             <td>{$userArray['username']}</td>
-            <td><a href="{link User:delete id=>$userArray['id']}">smazat</a></td>
+            <td><a href="{link User:delete userId=>$userArray['id']}">smazat</a></td>
         </tr>
     </table>
 {/block}

@@ -19,6 +19,7 @@ final class RouterFactory
 		$router->addRoute('sign/in', 'Sign:in');
 
 		$router->addRoute('users/list', 'User:list');
+		$router->addRoute('users/delete/<userId>', 'User:delete');
 
 		$router->addRoute('<presenter>/<action>', 'Homepage:default');
 		return $router;

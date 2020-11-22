@@ -28,10 +28,22 @@ class UserService
                 'role' => $user->role,
                 'fullName' => $user->Full_name,
                 'dateOfBirth' => $user->Date_of_birth,
-                'Function' => $user->Function,
+                'function' => $user->Function,
             ];
         }
 
         return $data;
+    }
+
+
+    public function delete(int $userId): void
+    {
+        $user = $this->db->table('User')->get($userId);
+
+        if ($user === null) {
+            throw new \InvalidArgumentException('User not found');
+        }
+
+        $this->db->table('User')->where('id', $userId);
     }
 }
