@@ -16,11 +16,9 @@ session:
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=test'
-	user:
-	password:
-	options:
-		lazy: yes
+	dsn: 'mysql:host=165.22.81.91;dbname=iis'
+	user: iis
+	password: iis-database
 
 
 services:

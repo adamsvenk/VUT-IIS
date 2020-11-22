@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use Exception;
 use Nette;
 use Nette\Security\Passwords;
 
@@ -16,11 +17,10 @@ final class UserManager implements Nette\Security\IAuthenticator
 	use Nette\SmartObject;
 
 	private const
-		TABLE_NAME = 'users',
+		TABLE_NAME = 'user',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
-		COLUMN_EMAIL = 'email',
 		COLUMN_ROLE = 'role';
 
 
@@ -37,11 +37,12 @@ final class UserManager implements Nette\Security\IAuthenticator
 		$this->passwords = $passwords;
 	}
 
-
-	/**
-	 * Performs an authentication.
-	 * @throws Nette\Security\AuthenticationException
-	 */
+    /**
+     * Performs an authentication.
+     * @param array $credentials
+     * @return Nette\Security\IIdentity
+     * @throws Nette\Security\AuthenticationException
+     */
 	public function authenticate(array $credentials): Nette\Security\IIdentity
 	{
 		[$username, $password] = $credentials;
@@ -67,11 +68,14 @@ final class UserManager implements Nette\Security\IAuthenticator
 		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
 
-
-	/**
-	 * Adds new user.
-	 * @throws DuplicateNameException
-	 */
+    /**
+     * Adds new user.
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     * @throws DuplicateNameException
+     * @throws Nette\Utils\AssertionException
+     */
 	public function add(string $username, string $email, string $password): void
 	{
 		Nette\Utils\Validators::assert($email, 'email');
@@ -79,7 +83,6 @@ final class UserManager implements Nette\Security\IAuthenticator
 			$this->database->table(self::TABLE_NAME)->insert([
 				self::COLUMN_NAME => $username,
 				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
-				self::COLUMN_EMAIL => $email,
 			]);
 		} catch (Nette\Database\UniqueConstraintViolationException $e) {
 			throw new DuplicateNameException;
@@ -89,6 +92,6 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 
 
-class DuplicateNameException extends \Exception
+class DuplicateNameException extends Exception
 {
 }
