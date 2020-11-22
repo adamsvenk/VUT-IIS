@@ -20,7 +20,7 @@ USE `iis` ;
 DROP TABLE IF EXISTS `iis`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`User` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `username` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
   `role` ENUM('admin', 'insuranceWorker', 'doctor', 'patient') NULL,
@@ -37,7 +37,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `iis`.`Health_problem` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Health_problem` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `Name` VARCHAR(100) NULL,
   `Description` VARCHAR(300) NULL,
   `User_id` INT NOT NULL,
@@ -58,7 +58,7 @@ CREATE INDEX `fk_Health_problem_User1_idx` ON `iis`.`Health_problem` (`User_id` 
 DROP TABLE IF EXISTS `iis`.`Health_report` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Health_report` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `Text` VARCHAR(1000) NULL,
   `Picture` BLOB NULL,
   `Health_problem_id` INT NOT NULL,
@@ -79,7 +79,7 @@ CREATE INDEX `fk_Health_report_Health_problem1_idx` ON `iis`.`Health_report` (`H
 DROP TABLE IF EXISTS `iis`.`Examination_request` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Examination_request` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `State` VARCHAR(45) NULL,
   `Health_problem_id` INT NOT NULL,
   `User_id` INT NOT NULL,
@@ -107,7 +107,7 @@ CREATE INDEX `fk_Examination_request_User1_idx` ON `iis`.`Examination_request` (
 DROP TABLE IF EXISTS `iis`.`Medical_procedure` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Medical_procedure` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `Type_of_procedure` VARCHAR(100) NULL,
   `Execution_date` DATETIME NULL,
   `Examination_request_idExamination_request` INT NOT NULL,
@@ -136,7 +136,7 @@ CREATE INDEX `fk_Medical_procedure_User1_idx` ON `iis`.`Medical_procedure` (`Use
 DROP TABLE IF EXISTS `iis`.`Payment` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`Payment` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `Amount` INT NULL,
   `User_id` INT NOT NULL,
   `Medical_procedure_id` INT NOT NULL,
