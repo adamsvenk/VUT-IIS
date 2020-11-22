@@ -21,12 +21,12 @@ DROP TABLE IF EXISTS `iis`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `iis`.`User` (
   `id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `username` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
-  `role` ENUM('admin', 'insuranceWorker', 'doctor', 'patient') NULL,
-  `Full_name` VARCHAR(45) NULL,
+  `username` VARCHAR(255),
+  `password` VARCHAR(60),
+  `role` ENUM('admin', 'insuranceWorker', 'doctor', 'patient'),
+  `Full_name` VARCHAR(255) NULL,
   `Date_of_birth` DATE NULL,
-  `Function` VARCHAR(45) NULL,
+  `Function` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
