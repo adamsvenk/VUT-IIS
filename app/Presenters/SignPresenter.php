@@ -6,9 +6,10 @@ namespace App\Presenters;
 
 use App\Forms;
 use Nette\Application\UI\Form;
+use Nette;
 
 
-final class SignPresenter extends BasePresenter
+final class SignPresenter extends Nette\Application\UI\Presenter
 {
 	/** @persistent */
 	public $backlink = '';
