@@ -20,6 +20,10 @@
 
 <body>
 	<div class=container>
+		<a n:href="Sign:out">Odhlásit</a>
+		<br>
+		<br>
+
 		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 
 		{include content}

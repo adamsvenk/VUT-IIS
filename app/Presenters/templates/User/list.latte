@@ -4,6 +4,7 @@
         <tr n:foreach="$users as $userArray">
             <td>{$userArray['username']}</td>
             <td><a n:href="User:delete userId=>$userArray['id']">smazat</a></td>
+            <td><a n:href="User:edit userId=>$userArray['id']">editovat</a></td>
         </tr>
     </table>
 {/block}

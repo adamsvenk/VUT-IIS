@@ -21,6 +21,7 @@ final class RouterFactory
 		$router->addRoute('users/list', 'User:list');
 		$router->addRoute('users/delete/<userId>', 'User:delete');
 		$router->addRoute('users/create', 'User:create');
+		$router->addRoute('users/edit/<userId>', 'User:edit');
 
 		$router->addRoute('<presenter>/<action>', 'Homepage:default');
 		return $router;

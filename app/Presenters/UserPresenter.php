@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Model\UserManager;
 use App\Model\UserService;
 use Exception;
 use Nette\Application\AbortException;
@@ -15,6 +16,15 @@ class UserPresenter extends LoggedPresenter
      */
     public $userService;
 
+    public function startup()
+    {
+        parent::startup();
+
+        if (!$this->user->isInRole(UserManager::ROLE_ADMIN)) {
+            $this->flashMessage('Nedostatečná práva', 'warning');
+            $this->redirect('Homepage:Default');
+        }
+    }
 
     public function renderList(): void
     {
@@ -25,6 +35,10 @@ class UserPresenter extends LoggedPresenter
     public function createComponentCreateForm()
     {
         $form = new Form();
+
+        $userId = $this->getRequest()->getParameter('userId') ? (int) $this->getRequest()->getParameter('userId') : null;
+
+        $form->addHidden('userId', $userId);
 
         $form->addText('username', 'Uživ jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka uživatelského jména je 45 znaků.', 45)
@@ -46,7 +60,16 @@ class UserPresenter extends LoggedPresenter
         $form->addText('function', 'Funkce')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka funkce je 45 znaků', 45);
 
-        $form->onSuccess[] = [$this, 'formSubmit'];
+        //edit form
+        if ($form['userId'] !== null) {
+            $form['password']->setRequired(false);
+
+            $form->setDefaults($this->userService->getDefaults($userId));
+
+            $form->onSuccess[] = [$this, 'formEditSubmit'];
+        } else {
+            $form->onSuccess[] = [$this, 'formCreateSubmit'];
+        }
 
         $form->addSubmit('submit');
 
@@ -54,7 +77,7 @@ class UserPresenter extends LoggedPresenter
     }
 
 
-    public function formSubmit(Form $form)
+    public function formCreateSubmit(Form $form)
     {
         $this->userService->create($form->getValues());
         try {
@@ -62,6 +85,20 @@ class UserPresenter extends LoggedPresenter
             $this->flashMessage('Uživatel byl vytvořen');
         } catch (Exception $e) {
             $this->flashMessage('Uživatele se nepodařilo vytvořit', 'danger');
+        }
+
+        $this->redirect('User:list');
+    }
+
+
+    public function formEditSubmit(Form $form)
+    {
+        $this->userService->edit($form->getValues());
+        try {
+
+            $this->flashMessage('Uživatel byl upraven');
+        } catch (Exception $e) {
+            $this->flashMessage('Uživatele se nepodařilo upravit', 'danger');
         }
 
         $this->redirect('User:list');

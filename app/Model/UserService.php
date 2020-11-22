@@ -4,12 +4,13 @@ namespace App\Model;
 
 use InvalidArgumentException;
 use Nette\Database\Context;
+use Nette\Database\Table\ActiveRow;
 use Nette\Security\Passwords;
 use stdClass;
 
 class UserService
 {
-    /** @var Context  */
+    /** @var Context */
     private $db;
 
     /** @var Passwords */
@@ -20,7 +21,6 @@ class UserService
         $this->db = $db;
         $this->passwords = $passwords;
     }
-
 
     public function getAll(): array
     {
@@ -42,7 +42,6 @@ class UserService
         return $data;
     }
 
-
     public function delete(int $userId): void
     {
         $user = $this->db->table('User')->get($userId);
@@ -54,21 +53,65 @@ class UserService
         $this->db->table('User')->where('id', $userId)->delete();
     }
 
-
     public function create(stdClass $values)
     {
-        $this->db->table('User')->insert([
-            'username' => $values->username,
-            'password' => $this->passwords->hash($values->password),
-            'role' => $values->role,
-            'Full_name' => $values->fullName,
-            'Date_of_birth' => Utils::dateStringToObject($values->date),
-            'Function' => $values->function,
-        ]);
+        $this->db->table('User')->insert(
+            [
+                'username' => $values->username,
+                'password' => $this->passwords->hash($values->password),
+                'role' => $values->role,
+                'Full_name' => $values->fullName ?: null,
+                'Date_of_birth' => Utils::dateStringToObject($values->date),
+                'Function' => $values->function ?: null,
+            ]
+        );
     }
 
+    public function getDefaults(?int $userId): array
+    {
+        if ($userId === null) {
+            return [];
+        }
 
-    public static function roles()
+        /** @var ActiveRow $user */
+        $user = $this->db->table('User')->get($userId);
+
+        if ($user === null) {
+            return [];
+        }
+
+        return [
+            'username' => $user->username,
+            'role' => $user->role,
+            'fullName' => $user->Full_name,
+            'date' => $user->Date_of_birth ? $user->Date_of_birth->format('Y-m-d') : null,
+            'function' => $user->Function,
+        ];
+    }
+
+    public function edit(stdClass $values): void
+    {
+        $user = $this->db->table('User')->get($values->userId);
+
+        if ($user === null) {
+            throw new InvalidArgumentException('User not found');
+        }
+        $tableValues = [
+            'username' => $values->username,
+            'role' => $values->role,
+            'Full_name' => $values->fullName ?: null,
+            'Date_of_birth' => Utils::dateStringToObject($values->date),
+            'Function' => $values->function ?: null,
+        ];
+
+        if (!empty($values->password)) {
+            $tableValues['password'] = $this->passwords->hash($values->password);
+        }
+
+        $user->update($tableValues);
+    }
+
+    public static function roles(): array
     {
         $roles = [
             UserManager::ROLE_PATIENT,
