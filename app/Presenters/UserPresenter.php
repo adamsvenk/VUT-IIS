@@ -60,8 +60,8 @@ class UserPresenter extends LoggedPresenter
         $form->addText('function', 'Funkce')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka funkce je 45 znaků', 45);
 
-        //edit form
-        if ($form['userId'] !== null) {
+        //edit for
+        if ($form['userId']->getValue() !== "") {
             $form['password']->setRequired(false);
 
             $form->setDefaults($this->userService->getDefaults($userId));
