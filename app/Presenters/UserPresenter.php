@@ -76,14 +76,27 @@ class UserPresenter extends LoggedPresenter
         $form->setDefaults($this->userService->getDefaults($userId));
     }
 
+    /**
+     * @param Form $form
+     * @throws AbortException
+     */
     public function formSuccess(Form $form)
     {
         try {
             $this->userService->update($this->userId, $form->getValues());
 
-            $this->flashMessage('Uživatel byl vytvořen');
+            if ($this->userId !== null) {
+                $this->flashMessage('Uživatel byl upraven', 'success');
+            } else {
+                $this->flashMessage('Uživatel byl vytvořen', 'success');
+            }
+
         } catch (Exception $e) {
-            $this->flashMessage('Uživatele se nepodařilo vytvořit', 'danger');
+            if ($this->userId !== null) {
+                $this->flashMessage('Uživatele se nepodařilo vytvořit', 'danger');
+            } else {
+                $this->flashMessage('Uživatele se nepodařilo upravit', 'danger');
+            }
         }
 
         $this->redirect('User:list');
@@ -98,7 +111,7 @@ class UserPresenter extends LoggedPresenter
         try {
             $this->userService->delete($userId);
 
-            $this->flashMessage('Uživatel byl smazán');
+            $this->flashMessage('Uživatel byl smazán', 'success');
         } catch (Exception $e) {
             $this->flashMessage('Uživatele se nepodařilo vymazat', 'danger');
         }
