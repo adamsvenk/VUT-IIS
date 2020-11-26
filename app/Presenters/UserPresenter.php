@@ -16,6 +16,9 @@ class UserPresenter extends LoggedPresenter
      */
     public $userService;
 
+    /** @var int|null */
+    public $userId;
+
     public function startup()
     {
         parent::startup();
@@ -31,25 +34,20 @@ class UserPresenter extends LoggedPresenter
         $this->template->users = $this->userService->getAll();
     }
 
-
     public function createComponentCreateForm()
     {
         $form = new Form();
 
-        $userId = $this->getRequest()->getParameter('userId') ? (int) $this->getRequest()->getParameter('userId') : null;
-
-        $form->addHidden('userId', $userId);
-
         $form->addText('username', 'Uživ jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka uživatelského jména je 45 znaků.', 45)
-            ->setRequired();
+            ->setRequired('Pole uživatelské jméno je povinné');
 
         $form->addPassword('password', 'Heslo')
-            ->setRequired();
+            ->setRequired('Pole heslo je povinne');
 
         $form->addSelect('role', 'Role')
             ->setItems(UserService::roles())
-            ->setRequired(true);
+            ->setRequired('Výběr role je povinný');
 
         $form->addText('fullName', 'Celé jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka jména je 255 znaků', 255);
@@ -60,26 +58,27 @@ class UserPresenter extends LoggedPresenter
         $form->addText('function', 'Funkce')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka funkce je 45 znaků', 45);
 
-        //edit for
-        if ($form['userId']->getValue() !== "") {
-            $form['password']->setRequired(false);
-
-            $form->setDefaults($this->userService->getDefaults($userId));
-
-            $form->onSuccess[] = [$this, 'formEditSubmit'];
-        } else {
-            $form->onSuccess[] = [$this, 'formCreateSubmit'];
-        }
-
         $form->addSubmit('submit');
+
+        $form->onSuccess[] = [$this, 'formSuccess'];
 
         return $form;
     }
 
-
-    public function formCreateSubmit(Form $form)
+    public function actionEdit(int $userId)
     {
-        $this->userService->create($form->getValues());
+        $this->userId = $userId;
+
+        /** @var Form $form */
+        $form = $this['createForm'];
+
+        $form['password']->setRequired(false);
+        $form->setDefaults($this->userService->getDefaults($userId));
+    }
+
+    public function formSuccess(Form $form)
+    {
+        $this->userService->update($this->userId, $form->getValues());
         try {
 
             $this->flashMessage('Uživatel byl vytvořen');
@@ -89,21 +88,6 @@ class UserPresenter extends LoggedPresenter
 
         $this->redirect('User:list');
     }
-
-
-    public function formEditSubmit(Form $form)
-    {
-        $this->userService->edit($form->getValues());
-        try {
-
-            $this->flashMessage('Uživatel byl upraven');
-        } catch (Exception $e) {
-            $this->flashMessage('Uživatele se nepodařilo upravit', 'danger');
-        }
-
-        $this->redirect('User:list');
-    }
-
 
     /**
      * @param int $userId
