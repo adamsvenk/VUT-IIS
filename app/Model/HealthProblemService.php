@@ -7,6 +7,11 @@ use stdClass;
 
 class HealthProblemService
 {
+    public const STATE_NEW = 'new';
+    public const STATE_ONGOING = 'ongoing';
+    public const STATE_WAITING = 'waiting';
+    public const STATE_CLOSED = 'closed';
+
     private const HEALTH_PROBLEM_TABLE = 'Health_problem';
 
     /** @var Context */
@@ -28,6 +33,7 @@ class HealthProblemService
                 'id' => $healthProblem->id,
                 'name' => $healthProblem->Name,
                 'description' => $healthProblem->Description,
+                'state' => self::getStateList()[$healthProblem->state],
                 'user' => $healthProblem->User->Full_name,
             ];
         }
@@ -51,6 +57,7 @@ class HealthProblemService
         return [
             'name' => $healthProblem->Name,
             'description' => $healthProblem->Description,
+            'state' => $healthProblem->state,
         ];
     }
 
@@ -59,6 +66,7 @@ class HealthProblemService
         $tableValues = [
             'Name' =>  $values->name,
             'Description' => $values->description,
+            'state' => $values->state,
             'User_id' => 1,
         ];
 
@@ -84,5 +92,15 @@ class HealthProblemService
         }
 
         $healthProblem->delete();
+    }
+
+    public static function getStateList()
+    {
+        return [
+            self::STATE_NEW => 'Nový',
+            self::STATE_ONGOING => 'Probíhající',
+            self::STATE_WAITING => 'Čekající na vyšetření',
+            self::STATE_CLOSED => 'Ukončený',
+        ];
     }
 }

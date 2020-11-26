@@ -35,6 +35,9 @@ class HealthProblemPresenter extends LoggedPresenter
             ->addRule(Form::MAX_LENGTH, 'Maximální délka popisu je 300 znaků.', 100)
             ->setRequired(false);
 
+        $form->addSelect('state', 'Stav')
+            ->setItems(HealthProblemService::getStateList());
+
         $form->addSubmit('submit');
 
         $form->onSuccess[] = [$this, 'formSuccess'];

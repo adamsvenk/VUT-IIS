@@ -165,3 +165,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- Additional changes
 alter table Health_problem modify Name varchar(100) not null;
+
+alter table Health_problem
+	add state enum('new', 'ongoing', 'waiting', 'closed') default 'new' not null;
+
