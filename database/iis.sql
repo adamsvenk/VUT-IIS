@@ -169,3 +169,13 @@ alter table Health_problem modify Name varchar(100) not null;
 alter table Health_problem
 	add state enum('new', 'ongoing', 'waiting', 'closed') default 'new' not null;
 
+alter table Health_problem change User_id patient_id int not null;
+
+alter table Health_problem
+    add doctor_id int not null;
+
+alter table Health_problem
+    add constraint Health_problem_user_id_fk
+        foreign key (doctor_id) references User (id)
+            on update cascade on delete cascade;
+

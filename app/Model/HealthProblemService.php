@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use InvalidArgumentException;
 use Nette\Database\Context;
 use stdClass;
 
@@ -34,7 +35,7 @@ class HealthProblemService
                 'name' => $healthProblem->Name,
                 'description' => $healthProblem->Description,
                 'state' => self::getStateList()[$healthProblem->state],
-                'user' => $healthProblem->User->Full_name,
+                'user' => $healthProblem->patient->Full_name,
             ];
         }
 
@@ -61,22 +62,24 @@ class HealthProblemService
         ];
     }
 
-    public function update(?int $healthProblemId, stdClass $values)
+    public function update(?int $healthProblemId, stdClass $values, int $doctorId)
     {
         $tableValues = [
             'Name' =>  $values->name,
             'Description' => $values->description,
             'state' => $values->state,
-            'User_id' => 1,
+            'patient_id' => $values->patient,
         ];
 
         if ($healthProblemId === null) {
+            $tableValues['doctor_id'] = $doctorId;
+
             $this->db->table(self::HEALTH_PROBLEM_TABLE)->insert($tableValues);
         } else {
             $healthProblem = $this->db->table(self::HEALTH_PROBLEM_TABLE)->get($healthProblemId);
 
             if (!$healthProblem) {
-                throw new \InvalidArgumentException('Health problem not found');
+                throw new InvalidArgumentException('Health problem not found');
             }
 
             $healthProblem->update($tableValues);
@@ -88,7 +91,7 @@ class HealthProblemService
         $healthProblem = $this->db->table(self::HEALTH_PROBLEM_TABLE)->get($healthProblemId);
 
         if (!$healthProblem) {
-            throw new \InvalidArgumentException('Health problem not found');
+            throw new InvalidArgumentException('Health problem not found');
         }
 
         $healthProblem->delete();

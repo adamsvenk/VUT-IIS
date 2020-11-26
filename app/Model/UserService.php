@@ -112,4 +112,17 @@ class UserService
 
         return array_combine($roles, $roles);
     }
+
+    public function getPatientList()
+    {
+        $data = [];
+
+        $users = $this->db->table('User')->where(['role' => UserManager::ROLE_PATIENT])->fetchAll();
+
+        foreach ($users as $user) {
+            $data[$user->id] = $user->Full_name;
+        }
+
+        return $data;
+    }
 }

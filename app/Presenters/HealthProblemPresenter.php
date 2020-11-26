@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use App\Model\HealthProblemService;
+use App\Model\UserService;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -15,6 +16,12 @@ class HealthProblemPresenter extends LoggedPresenter
      */
     public $healthProblemService;
 
+    /**
+     * @var UserService
+     * @inject
+     */
+    public $userService;
+
     /** @var int|null */
     public $healthProblemId;
 
@@ -26,6 +33,9 @@ class HealthProblemPresenter extends LoggedPresenter
     public function createComponentForm()
     {
         $form = new Form();
+
+        $form->addSelect('patient', 'Pacient')
+            ->setItems($this->userService->getPatientList());
 
         $form->addText('name', 'Jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka jména je 100 znaků.', 100)
@@ -62,7 +72,8 @@ class HealthProblemPresenter extends LoggedPresenter
     public function formSuccess(Form $form)
     {
         try {
-            $this->healthProblemService->update($this->healthProblemId, $form->getValues());
+            $doctorId = $this->user->getId();
+            $this->healthProblemService->update($this->healthProblemId, $form->getValues(), $doctorId);
 
             if ($this->healthProblemId !== null) {
                 $this->flashMessage('Zdravotní problém byl upraven', 'success');
