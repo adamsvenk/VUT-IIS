@@ -1,0 +1,11 @@
+{block content}
+    <a n:href="HealthProblem:create">Vytvořit</a>
+    <table>
+        <tr n:foreach="$healthProblems as $healthProblem">
+            <td>{$healthProblem['name']}</td>
+            <td>{$healthProblem['user']}</td>
+            <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
+            <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>
+        </tr>
+    </table>
+{/block}

@@ -23,6 +23,8 @@ final class RouterFactory
 		$router->addRoute('users/create', 'User:create');
 		$router->addRoute('users/edit/<userId>', 'User:edit');
 
+		$router->addRoute('/health-problems/list', 'HealthProblem:list');
+
 		$router->addRoute('<presenter>/<action>', 'Homepage:default');
 		return $router;
 	}

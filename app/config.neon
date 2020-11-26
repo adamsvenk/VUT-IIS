@@ -26,3 +26,4 @@ services:
 	- App\Forms\SignInFormFactory
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\UserService
+	- App\Model\HealthProblemService

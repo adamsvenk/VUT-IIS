@@ -161,3 +161,7 @@ CREATE INDEX `fk_Payment_Medical_procedure1_idx` ON `iis`.`Payment` (`Medical_pr
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- Additional changes
+alter table Health_problem modify Name varchar(100) not null;

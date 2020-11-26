@@ -78,8 +78,8 @@ class UserPresenter extends LoggedPresenter
 
     public function formSuccess(Form $form)
     {
-        $this->userService->update($this->userId, $form->getValues());
         try {
+            $this->userService->update($this->userId, $form->getValues());
 
             $this->flashMessage('Uživatel byl vytvořen');
         } catch (Exception $e) {
