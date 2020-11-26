@@ -37,4 +37,24 @@ abstract class LoggedPresenter extends Nette\Application\UI\Presenter
         $this->template->isDoctor = $user->isInRole(UserManager::ROLE_DOCTOR);
         $this->template->isPatient = $user->isInRole(UserManager::ROLE_PATIENT);
     }
+
+    /**
+     * @param array $roles
+     * @throws Nette\Application\AbortException
+     */
+    public function allowedRoles(array $roles)
+    {
+        $isAllowed = false;
+
+        foreach ($roles as $role) {
+            if ($this->user->isInRole($role)) {
+                $isAllowed = true;
+            }
+        }
+
+        if (!$isAllowed) {
+            $this->flashMessage('Nedostatečná práva', 'warning');
+            $this->redirect('Homepage:Default');
+        }
+    }
 }

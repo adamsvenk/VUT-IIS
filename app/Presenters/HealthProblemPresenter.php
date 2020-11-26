@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use App\Model\HealthProblemService;
+use App\Model\UserManager;
 use App\Model\UserService;
 use Exception;
 use Nette\Application\AbortException;
@@ -24,6 +25,13 @@ class HealthProblemPresenter extends LoggedPresenter
 
     /** @var int|null */
     public $healthProblemId;
+
+    public function startup()
+    {
+        parent::startup();
+
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+    }
 
     public function renderList(): void
     {
@@ -55,8 +63,22 @@ class HealthProblemPresenter extends LoggedPresenter
         return $form;
     }
 
+    /**
+     * @throws AbortException
+     */
+    public function actionCreate()
+    {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+    }
+
+    /**
+     * @param int $healthProblemId
+     * @throws AbortException
+     */
     public function actionEdit(int $healthProblemId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+
         $this->healthProblemId = $healthProblemId;
 
         /** @var Form $form */
@@ -97,6 +119,8 @@ class HealthProblemPresenter extends LoggedPresenter
      */
     public function actionDelete(int $healthProblemId): void
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+
         try {
             $this->healthProblemService->delete($healthProblemId);
 

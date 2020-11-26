@@ -23,10 +23,7 @@ class UserPresenter extends LoggedPresenter
     {
         parent::startup();
 
-        if (!$this->user->isInRole(UserManager::ROLE_ADMIN)) {
-            $this->flashMessage('Nedostatečná práva', 'warning');
-            $this->redirect('Homepage:Default');
-        }
+        $this->allowedRoles([UserManager::ROLE_ADMIN]);
     }
 
     public function renderList(): void
