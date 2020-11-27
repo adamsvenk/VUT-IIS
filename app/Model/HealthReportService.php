@@ -28,7 +28,7 @@ class HealthReportService
                 'id' => $healthReport->id,
                 'Text' => $healthReport->Text,
                 'Picture' => $healthReport->Picture,
-                'Date' =>$healthReport->Date
+                'DateTime' =>$healthReport->DateTime,
             ];
         }
 
@@ -49,8 +49,9 @@ class HealthReportService
         }
 
         return [
-            'text' => $healthReport->Text,
-            'picture' => $healthReport->Picture,
+            'Text' => $healthReport->Text,
+            'Picture' => $healthReport->Picture,
+            'DateTime' => $healthReport->DateTime,
         ];
     }
     
@@ -59,7 +60,7 @@ class HealthReportService
         $tableValues = [
             'Text' =>  $values->Text,
             'Picture' => $values->Picture,
-            'Date' => $values->Datet,
+            'DateTime' => $values->DateTime,
             'health_problem_id' => $values->health_problem,
         ];
 
