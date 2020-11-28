@@ -125,7 +125,6 @@ class ReportPresenter extends LoggedPresenter
     public function renderDetail(int $healthProblemId, int $reportId)
     {
         $this->template->report = $this->reportService->get($reportId);
-        $this->template->healthProblemId = $healthProblemId;
     }
 
     public function actionImage(int $reportId)

@@ -28,3 +28,4 @@ services:
 	- App\Model\UserService
 	- App\Model\HealthProblemService
 	- App\Model\ReportService
+	- App\Model\ExaminationService

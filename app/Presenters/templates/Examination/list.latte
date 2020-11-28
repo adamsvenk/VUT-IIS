@@ -1,0 +1,25 @@
+{block content}
+    <a n:href="HealthProblem:list">zpět</a>
+    <br><br>
+
+    <h3>Žádosti o vyšetření pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
+    <a n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+    <br><br>
+
+    <table>
+        <tr>
+            <td>Text</td>
+            <td>Stav</td>
+            <td>Přiřazeno lékaři</td>
+            <td colspan="2">Akce</td>
+        </tr>
+        <tr n:foreach="$examinations as $examination">
+            <td>{$examination['text']}</td>
+            <td>{$examination['state']}</td>
+            <td>{$examination['doctorName']}</td>
+
+            <td><a n:href="Examination:delete healthProblemId=>$healthProblemId, examinationId=>$examination['id']">smazat</a></td>
+            <td><a n:href="Examination:edit healthProblemId=>$healthProblemId, examinationId=>$examination['id']">editovat</a></td>
+        </tr>
+    </table>
+{/block}

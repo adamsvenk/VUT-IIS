@@ -43,7 +43,7 @@ class HealthProblemPresenter extends LoggedPresenter
         $form = new Form();
 
         $form->addSelect('patient', 'Pacient')
-            ->setItems($this->userService->getPatientList());
+            ->setItems($this->userService->getAllByRole(UserManager::ROLE_PATIENT));
 
         $form->addText('name', 'Jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka jména je 100 znaků.', 100)
