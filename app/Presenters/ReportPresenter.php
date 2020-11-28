@@ -31,6 +31,8 @@ class ReportPresenter extends LoggedPresenter
      * @var int|null
      */
     public $reportId;
+    
+    public $DateTime;
 
     public function beforeRender()
     {
@@ -65,6 +67,10 @@ class ReportPresenter extends LoggedPresenter
         $form->addHidden('healthProblemId');
         $form->addHidden('reportId');
 
+        $form->addText('subject', 'Subject')
+            ->addRule(Form::MAX_LENGTH, 'Maximální délka textu je 50 znaků.', 50)
+            ->setRequired('předmět je povinný');
+        
         $form->addTextArea('text', 'Text')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka textu je 1000 znaků.', 1000)
             ->setRequired('text je povinný');
@@ -126,6 +132,7 @@ class ReportPresenter extends LoggedPresenter
     {
         $this->healthProblemId = $healthProblemId;
         $this->template->report = $this->reportService->get($reportId);
+        
     }
 
     public function actionImage(int $reportId)
@@ -135,4 +142,5 @@ class ReportPresenter extends LoggedPresenter
         header('Content-type: image/png');
         echo $report->Picture;
     }
+    
 }

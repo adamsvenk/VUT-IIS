@@ -12,7 +12,7 @@
             <td colspan="2">Akce</td>
         </tr>
         <tr n:foreach="$reports as $report">
-            <td>{$report['text']}</td>
+            <td>{$report['subject']}</td>
 
             <td><a n:href="Report:delete healthProblemId=>$healthProblemId, reportId=>$report['id']">smazat</a></td>
             <td><a n:href="Report:edit healthProblemId=>$healthProblemId, reportId=>$report['id']">editovat</a></td>

@@ -30,6 +30,7 @@ class ReportService
         foreach ($reports as $report) {
             $data[] = [
                 'id' => $report->id,
+                'subject' => $report->Subject,
                 'text' => $report->Text,
             ];
         }
@@ -51,6 +52,7 @@ class ReportService
         }
 
         return [
+            'subject' => $report->Subject,
             'text' => $report->Text,
             
         ];
@@ -60,6 +62,7 @@ class ReportService
     {
         //tyhle hodnoty se vkládají vždy
         $tableValues = [
+            'Subject' => $values->Subject,
             'Text' => $values->text,
             'DateTime'=> date('Y-m-d H:i:s'),
         ];
