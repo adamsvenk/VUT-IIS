@@ -122,8 +122,9 @@ class ReportPresenter extends LoggedPresenter
         $this->redirect('Report:list', ['healthProblemId' => $healthProblemId]);
     }
 
-    public function renderDetail(int $healthProblemId, int $reportId)
+    public function actionDetail(int $healthProblemId, int $reportId)
     {
+        $this->healthProblemId = $healthProblemId;
         $this->template->report = $this->reportService->get($reportId);
     }
 
