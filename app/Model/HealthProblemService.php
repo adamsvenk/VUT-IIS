@@ -42,6 +42,11 @@ class HealthProblemService
         return $data;
     }
 
+    public function get(int $healthProblemId)
+    {
+        return $this->db->table(self::HEALTH_PROBLEM_TABLE)->get($healthProblemId);
+    }
+
     public function getDefaults(?int $healthProblemId)
     {
         if ($healthProblemId === null) {

@@ -1,6 +1,6 @@
 {block content}
     <a class="user-administration" n:href="HealthProblem:create">Vytvořit</a>
-    
+
     <table class="styled-table">
         <thead>
             <th>Názov problému</th>
@@ -17,11 +17,12 @@
                 <td>{$healthProblem['user']}</td>
                 <td>{$healthProblem['state']}</td>
                 <td>{$healthProblem['description']}</td>
-                
+
                 <td>Petr Pepe</td>
-                
+
                 <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
                 <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>
+                <td><a n:href="Report:list healthProblemId=>$healthProblem['id']">Lékařské zprávy</a></td>
             </tr>
         </tbody>
     </table>

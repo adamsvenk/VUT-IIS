@@ -27,3 +27,4 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\UserService
 	- App\Model\HealthProblemService
+	- App\Model\ReportService

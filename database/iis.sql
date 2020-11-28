@@ -179,3 +179,6 @@ alter table Health_problem
         foreign key (doctor_id) references User (id)
             on update cascade on delete cascade;
 
+INSERT INTO iis.User (username, password, role, Full_name, Date_of_birth, Function) VALUES ('admin', '$2y$10$jBllk1POwiTsIOYnj8yVpO/Lr62/PTWyJJIfAXZG911JgNhGuy/8C', 'admin', null, null, null);
+
+alter table Health_report modify Text varchar(1000) not null;

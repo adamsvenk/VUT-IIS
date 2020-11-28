@@ -25,6 +25,13 @@ final class RouterFactory
 
 		$router->addRoute('/health-problems/list', 'HealthProblem:list');
 
+		$router->addRoute('/reports/<healthProblemId>/list', 'Report:list');
+		$router->addRoute('/reports/<healthProblemId>/create', 'Report:create');
+        $router->addRoute('/reports/<healthProblemId>/edit/<reportId>', 'Report:edit');
+        $router->addRoute('/reports/<healthProblemId>/delete/<reportId>', 'Report:delete');
+		$router->addRoute('/reports/<healthProblemId>/detail/<reportId>', 'Report:detail');
+		$router->addRoute('/reports/image/<reportId>', 'Report:image');
+
 		$router->addRoute('<presenter>/<action>', 'Homepage:default');
 		return $router;
 	}

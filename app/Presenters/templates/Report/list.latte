@@ -1,0 +1,21 @@
+{block content}
+    <br><br>
+
+    <h3>Lékařské zprávy pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
+    <a n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+    <br><br>
+
+    <table>
+        <tr>
+            <td>Název</td>
+            <td colspan="2">Akce</td>
+        </tr>
+        <tr n:foreach="$reports as $report">
+            <td>{$report['text']}</td>
+
+            <td><a n:href="Report:delete healthProblemId=>$healthProblemId, reportId=>$report['id']">smazat</a></td>
+            <td><a n:href="Report:edit healthProblemId=>$healthProblemId, reportId=>$report['id']">editovat</a></td>
+            <td><a n:href="Report:detail healthProblemId=>$healthProblemId, reportId=>$report['id']">detail</a></td>
+        </tr>
+    </table>
+{/block}
