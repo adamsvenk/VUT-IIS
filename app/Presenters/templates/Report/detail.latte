@@ -1,7 +1,7 @@
 {block content}
     <br><br>
     <a n:href="Report:list healthProblemId=>$healthProblemId">Zpět</a>
-    <h2>Lékařská zpráva pro {$report->health_problem->Name} (Pacient {$report->health_problem->patient->Full_name}) - č. {$report->id}</h2>
+    <h2>Lékařská zpráva pro {$report->health_problem->Name} (Pacient {$report->health_problem->patient->Full_name}) - č. {$report->id} ze dne {$report->DateTime|truncate:18,''}</h2>
 
     <h3>Text</h3>
     <p>{$report->Text}</p>

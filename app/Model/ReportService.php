@@ -52,6 +52,7 @@ class ReportService
 
         return [
             'text' => $report->Text,
+            
         ];
     }
 
@@ -60,6 +61,7 @@ class ReportService
         //tyhle hodnoty se vkládají vždy
         $tableValues = [
             'Text' => $values->text,
+            'DateTime'=> date('Y-m-d H:i:s'),
         ];
 
         //pokud byl vložen obrázek, vkládá se i obrázek (jinak se nepřepisuje)
