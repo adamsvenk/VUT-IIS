@@ -31,6 +31,7 @@ class ExaminationService
         /** @var stdClass $report */
         foreach ($reports as $report) {
             $data[] = [
+                'datetime' => $report->DateTime,
                 'id' => $report->id,
                 'state' => self::getStateList()[$report->State],
                 'text' => $report->Text,
@@ -55,6 +56,7 @@ class ExaminationService
         }
 
         return [
+            'datetime' => $examination->DateTime,
             'state' => $examination->State,
             'text' => $examination->Text,
             'doctor' => $examination->doctor_id,
@@ -71,6 +73,7 @@ class ExaminationService
         ];
 
         if ($examinationId === null) {
+            $tableValues['DateTime'] = date('Y-m-d H:i:s');
             $tableValues['health_problem_id'] = $healthProblemId;
 
             $this->db->table(self::EXAMINATION_TABLE)->insert($tableValues);

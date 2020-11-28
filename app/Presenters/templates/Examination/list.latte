@@ -8,12 +8,14 @@
 
     <table>
         <tr>
+            <td>Datum</td>
             <td>Text</td>
             <td>Stav</td>
             <td>Přiřazeno lékaři</td>
             <td colspan="2">Akce</td>
         </tr>
         <tr n:foreach="$examinations as $examination">
+            <td>{$examination['datetime']|truncate:18,''}</td>
             <td>{$examination['text']}</td>
             <td>{$examination['state']}</td>
             <td>{$examination['doctorName']}</td>
