@@ -1,10 +1,24 @@
 {block content}
-    <a n:href="User:create">Vytvořit</a>
-    <table>
-        <tr n:foreach="$users as $userArray">
-            <td>{$userArray['username']}</td>
-            <td><a n:href="User:delete userId=>$userArray['id']">smazat</a></td>
-            <td><a n:href="User:edit userId=>$userArray['id']">editovat</a></td>
-        </tr>
+    <a class="user-administration" n:href="User:create">Vytvořit</a>
+
+    <table class="styled-table">
+        <thead>
+            <th>Celé jméno</th>
+            <th>Funkce</th>
+            <th>Uživatelské jméno</th>
+            <th>Role</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr n:foreach="$users as $userArray">
+                <td>{$userArray['fullName']}</td>
+                <td>{$userArray['function']}</td>
+                <td>{$userArray['username']}</td>
+                <td>{$userArray['role']}</td>
+                <td><a n:href="User:delete userId=>$userArray['id']">smazat</a></td>
+                <td><a n:href="User:edit userId=>$userArray['id']">editovat</a></td>
+            </tr>
+        </tbody>
     </table>
 {/block}

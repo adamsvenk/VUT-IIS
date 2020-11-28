@@ -35,7 +35,7 @@ class UserPresenter extends LoggedPresenter
     {
         $form = new Form();
 
-        $form->addText('username', 'Uživ jméno')
+        $form->addText('username', 'Uživatelské jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka uživatelského jména je 45 znaků.', 45)
             ->setRequired('Pole uživatelské jméno je povinné');
 
