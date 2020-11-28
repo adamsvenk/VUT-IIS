@@ -37,6 +37,11 @@ final class RouterFactory
         $router->addRoute('/examinations/<healthProblemId>/edit/<examinationId>', 'Examination:edit');
         $router->addRoute('/examinations/<healthProblemId>/delete/<examinationId>', 'Examination:delete');
 
+        $router->addRoute('procedures/list', 'Procedure:list');
+        $router->addRoute('procedures/delete/<procedureId>', 'Procedure:delete');
+        $router->addRoute('procedures/create', 'Procedure:create');
+        $router->addRoute('procedures/edit/<procedureId>', 'Procedure:edit');
+
 		$router->addRoute('<presenter>/<action>', 'Homepage:default');
 		return $router;
 	}

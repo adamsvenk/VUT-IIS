@@ -1,0 +1,18 @@
+{block content}
+    <a class="user-administration" n:href="Procedure:create">Vytvořit</a>
+
+    <table class="styled-table">
+        <thead>
+        <th>Jméno</th>
+        <th>Cena</th>
+        </thead>
+        <tbody>
+        <tr n:foreach="$procedures as $procedure">
+            <td>{$procedure['name']}</td>
+            <td>{$procedure['price']}</td>
+            <td><a n:href="Procedure:delete procedureId=>$procedure['id']">smazat</a></td>
+            <td><a n:href="Procedure:edit procedureId=>$procedure['id']">editovat</a></td>
+        </tr>
+        </tbody>
+    </table>
+{/block}
