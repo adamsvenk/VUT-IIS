@@ -32,10 +32,21 @@ final class RouterFactory
 		$router->addRoute('/reports/<healthProblemId>/detail/<reportId>', 'Report:detail');
 		$router->addRoute('/reports/image/<reportId>', 'Report:image');
 
+		$router->addRoute('/reports/create-for-examination/<examinationId>', 'Report:createForExamination');
+
         $router->addRoute('/examinations/<healthProblemId>/list', 'Examination:list');
         $router->addRoute('/examinations/<healthProblemId>/create', 'Examination:create');
         $router->addRoute('/examinations/<healthProblemId>/edit/<examinationId>', 'Examination:edit');
         $router->addRoute('/examinations/<healthProblemId>/delete/<examinationId>', 'Examination:delete');
+
+        $router->addRoute('/examinations/<examinationId>/reports/create', 'Report:createExamination');
+        $router->addRoute('/examinations/<examinationId>/reports/<reportId>/edit/', 'Report:editExamination');
+        $router->addRoute('/examinations/<examinationId>/reports/<reportId>/delete/', 'Report:deleteExamination');
+        $router->addRoute('/examinations/<examinationId>/reports/<reportId>/detail/', 'Report:detailExamination');
+
+        $router->addRoute('/examinations/my', 'Examination:my');
+        $router->addRoute('/examinations/<examinationId>/detail/', 'Examination:detail');
+        $router->addRoute('/examinations/<examinationId>/state-change/<state>', 'Examination:stateChange');
 
         $router->addRoute('procedures/list', 'Procedure:list');
         $router->addRoute('procedures/delete/<procedureId>', 'Procedure:delete');

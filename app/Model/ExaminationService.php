@@ -42,6 +42,30 @@ class ExaminationService
         return $data;
     }
 
+    public function getAllByUser(int $doctorId): array
+    {
+        $data = [];
+
+        $reports = $this->db->table(self::EXAMINATION_TABLE)->where(['doctor_id' => $doctorId]);
+
+        /** @var stdClass $report */
+        foreach ($reports as $report) {
+            $data[] = [
+                'datetime' => $report->DateTime,
+                'id' => $report->id,
+                'state' => self::getStateList()[$report->State],
+                'text' => $report->Text,
+            ];
+        }
+
+        return $data;
+    }
+
+    public function get(int $examinationId)
+    {
+        return $this->db->table(self::EXAMINATION_TABLE)->get($examinationId);
+    }
+
     public function getDefaults(?int $examinationId): array
     {
         if ($examinationId === null) {
@@ -106,6 +130,21 @@ class ExaminationService
             self::STATE_IN_PROGRESS => 'Vyřizuje se',
             self::STATE_CLOSED => 'Dokončeno',
         ];
+    }
+
+    public function changeState(int $examinationId, string $state)
+    {
+        if (!in_array($state, array_keys(self::getStateList()))) {
+            throw new InvalidArgumentException('State not valid');
+        }
+
+        $examination = $this->db->table(self::EXAMINATION_TABLE)->get($examinationId);
+
+        if ($examination === null) {
+            throw new InvalidArgumentException('Examination not found');
+        }
+
+        $examination->update(['state' => $state]);
     }
 
 }

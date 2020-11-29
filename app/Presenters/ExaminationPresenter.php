@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\ExaminationService;
 use App\Model\HealthProblemService;
+use App\Model\ReportService;
 use App\Model\UserManager;
 use App\Model\UserService;
 use Exception;
@@ -31,6 +32,12 @@ final class ExaminationPresenter extends LoggedPresenter
     public $examinationService;
 
     /**
+     * @var ReportService
+     * @inject
+     */
+    public $reportService;
+
+    /**
      * @var int|null
      */
     public $healthProblemId;
@@ -51,6 +58,18 @@ final class ExaminationPresenter extends LoggedPresenter
 
         $this->template->healthProblem = $this->healthProblemService->get($healthProblemId);
         $this->template->examinations = $this->examinationService->getAll($healthProblemId);
+    }
+
+    public function actionMy()
+    {
+        $this->template->examinations = $this->examinationService->getAllByUser($this->user->getId());
+    }
+
+    public function actionDetail(int $examinationId)
+    {
+        $this->template->stateMapping = ExaminationService::getStateList();
+        $this->template->examination = $this->examinationService->get($examinationId);
+        $this->template->reports = $this->reportService->getByExamination($examinationId);
     }
 
     public function actionCreate(int $healthProblemId)
@@ -129,6 +148,24 @@ final class ExaminationPresenter extends LoggedPresenter
         }
 
         $this->redirect('Examination:list', ['healthProblemId' => $healthProblemId]);
+    }
+
+    /**
+     * @param int $examinationId
+     * @param string $state
+     * @throws AbortException
+     */
+    public function actionStateChange(int $examinationId, string $state)
+    {
+        try {
+            $this->examinationService->changeState($examinationId, $state);
+
+            $this->flashMessage('Stav žádosti byl změněn', 'success');
+        } catch (Exception $e) {
+            $this->flashMessage('Stav žádosti se nepodařilo změnit', 'danger');
+        }
+
+        $this->redirect('Examination:detail', ['examinationId' => $examinationId]);
     }
 
 }

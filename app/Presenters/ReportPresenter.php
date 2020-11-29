@@ -7,6 +7,7 @@ use App\Model\ReportService;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
+use stdClass;
 
 class ReportPresenter extends LoggedPresenter
 {
@@ -30,12 +31,18 @@ class ReportPresenter extends LoggedPresenter
     /**
      * @var int|null
      */
+    public $examinationId;
+
+    /**
+     * @var int|null
+     */
     public $reportId;
     
     public $DateTime;
 
     public function beforeRender()
     {
+        $this->template->examinationId = $this->examinationId;
         $this->template->healthProblemId = $this->healthProblemId;
     }
 
@@ -50,6 +57,19 @@ class ReportPresenter extends LoggedPresenter
     public function actionCreate(int $healthProblemId)
     {
         $this->healthProblemId = $healthProblemId;
+    }
+
+    public function actionCreateExamination(int $examinationId)
+    {
+        $this->examinationId = $examinationId;
+    }
+
+    public function actionEditExamination(int $examinationId, int $reportId)
+    {
+        $this->examinationId = $examinationId;
+        $this->reportId = $reportId;
+
+        $this['form']->setDefaults($this->reportService->getDefaults($reportId));
     }
 
     public function actionEdit(int $healthProblemId, int $reportId)
@@ -91,8 +111,8 @@ class ReportPresenter extends LoggedPresenter
      */
     public function formSuccess(Form $form)
     {
+        $this->reportService->update($this->healthProblemId, $this->examinationId, $this->reportId, $form->getValues(), $this->user->getId());
         try {
-            $this->reportService->update($this->healthProblemId, $this->reportId, $form->getValues(), $this->user->getId());
 
             if ($this->reportId !== null) {
                 $this->flashMessage('Zdravotní zpráva byla upravena', 'success');
@@ -107,7 +127,11 @@ class ReportPresenter extends LoggedPresenter
             }
         }
 
-        $this->redirect('Report:list', ['healthProblemId' => $this->healthProblemId]);
+        if ($this->examinationId !== null) {
+            $this->redirect('Examination:detail', ['examinationId' => $this->examinationId]);
+        } else {
+            $this->redirect('Report:list', ['healthProblemId' => $this->healthProblemId]);
+        }
     }
 
     /**
@@ -128,15 +152,39 @@ class ReportPresenter extends LoggedPresenter
         $this->redirect('Report:list', ['healthProblemId' => $healthProblemId]);
     }
 
+    /**
+     * @param int $examinationId
+     * @param int $reportId
+     * @throws AbortException
+     */
+    public function actionDeleteExamination(int $examinationId, int $reportId)
+    {
+        try {
+            $this->reportService->delete($reportId);
+
+            $this->flashMessage('Zdravotní zpráva byla smazána', 'success');
+        } catch (Exception $e) {
+            $this->flashMessage('Zdravotní zprávu se nepodařilo vymazat', 'danger');
+        }
+
+        $this->redirect('Examination:detail', ['examinationId' => $examinationId]);
+    }
+
     public function actionDetail(int $healthProblemId, int $reportId)
     {
         $this->healthProblemId = $healthProblemId;
         $this->template->report = $this->reportService->get($reportId);
-        
+    }
+
+    public function actionDetailExamination(int $examinationId, int $reportId)
+    {
+        $this->examinationId = $examinationId;
+        $this->template->report = $this->reportService->get($reportId);
     }
 
     public function actionImage(int $reportId)
     {
+        /** @var stdClass $report */
         $report = $this->reportService->get($reportId);
 
         header('Content-type: image/png');

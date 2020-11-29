@@ -1,0 +1,19 @@
+{block content}
+    <br><br>
+
+    <h3>Mé žádosti o vyšetření</h3>
+    <br><br>
+
+    <table>
+        <tr>
+            <td>Text</td>
+            <td>Datum</td>
+            <td>Stav</td>
+        </tr>
+        <tr n:foreach="$examinations as $examination">
+            <td><a n:href="Examination:detail examinationId=>$examination['id']">{$examination['text']}</a></td>
+            <td>{$examination['datetime']|truncate:18,''}</td>
+            <td>{$examination['state']}</td>
+        </tr>
+    </table>
+{/block}

@@ -38,6 +38,24 @@ class ReportService
         return $data;
     }
 
+    public function getByExamination(int $examinationId): array
+    {
+        $data = [];
+
+        $reports = $this->db->table(self::REPORT_TABLE)->where(['examination_id' => $examinationId]);
+
+        /** @var stdClass $report */
+        foreach ($reports as $report) {
+            $data[] = [
+                'id' => $report->id,
+                'subject' => $report->Subject,
+                'text' => $report->Text,
+            ];
+        }
+
+        return $data;
+    }
+
     public function getDefaults(?int $reportId): array
     {
         if ($reportId === null) {
@@ -58,7 +76,7 @@ class ReportService
         ];
     }
 
-    public function update(int $healthProblemId, ?int $reportId, stdClass $values, int $doctorId)
+    public function update(?int $healthProblemId, ?int $examinationId, ?int $reportId, stdClass $values, int $doctorId)
     {
         //tyhle hodnoty se vkládají vždy
         $tableValues = [
@@ -74,10 +92,17 @@ class ReportService
             $tableValues['Picture'] = file_get_contents($picture->getTemporaryFile());
         }
 
+        if ($examinationId !== null) {
+            /** @var stdClass $examination */
+            $examination = $this->db->table('Examination_request')->get($examinationId);
+            $healthProblemId = $examination->health_problem_id;
+        }
+
         if ($reportId === null) {
             //hodnota se vkládá jen při vytváření
             $tableValues['doctor_id'] = $doctorId;
-            $tableValues['Health_problem_id'] = $healthProblemId;
+            $tableValues['health_problem_id'] = $healthProblemId;
+            $tableValues['examination_id'] = $examinationId;
 
             $this->db->table(self::REPORT_TABLE)->insert($tableValues);
         } else {
