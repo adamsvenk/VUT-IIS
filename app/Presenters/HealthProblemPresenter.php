@@ -35,7 +35,7 @@ class HealthProblemPresenter extends LoggedPresenter
 
     public function renderList(): void
     {
-        $this->template->healthProblems = $this->healthProblemService->getAll();
+        $this->template->healthProblems = $this->healthProblemService->getForUser($this->user->getId());
     }
 
     public function createComponentForm()

@@ -8,17 +8,16 @@
             <th>Stav</th>
             <th>Popis problému</th>
             <th>Oštrujúci lekár</th>
-            <th></th>
-            <th></th>
+            <th colspan="4" style="text-align: center">Akce</th>
         </thead>
         <tbody>
             <tr n:foreach="$healthProblems as $healthProblem">
                 <td>{$healthProblem['name']}</td>
-                <td>{$healthProblem['user']}</td>
+                <td>{$healthProblem['patientName']}</td>
                 <td>{$healthProblem['state']}</td>
                 <td>{$healthProblem['description']}</td>
+                <td>{$healthProblem['doctorName']}</td>
 
-                <td>Petr Pepe</td>
 
                 <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
                 <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>

@@ -35,7 +35,41 @@ class HealthProblemService
                 'name' => $healthProblem->Name,
                 'description' => $healthProblem->Description,
                 'state' => self::getStateList()[$healthProblem->state],
-                'user' => $healthProblem->patient->Full_name,
+                'patientName' => $healthProblem->patient->Full_name,
+                'doctorName' => $healthProblem->doctor->Full_name,
+            ];
+        }
+
+        return $data;
+    }
+
+    public function getForUser(int $userId)
+    {
+        /** @var stdClass $user */
+        $user = $this->db->table('User')->get($userId);
+
+        if ($user === null) {
+            throw new InvalidArgumentException('User not found');
+        }
+
+        if ($user->role === UserManager::ROLE_ADMIN) {
+            $healthProblems = $this->db->table(self::HEALTH_PROBLEM_TABLE)->fetchAll();
+        } else if ($user->role === UserManager::ROLE_DOCTOR) {
+            $healthProblems = $this->db->table(self::HEALTH_PROBLEM_TABLE)->where(['doctor_id' => $user->id])->fetchAll();
+        } else {
+            $healthProblems = $this->db->table(self::HEALTH_PROBLEM_TABLE)->where(['patient_id' => $user->id])->fetchAll();
+        }
+
+        $data = [];
+
+        foreach ($healthProblems as $healthProblem) {
+            $data[] = [
+                'id' => $healthProblem->id,
+                'name' => $healthProblem->Name,
+                'description' => $healthProblem->Description,
+                'state' => self::getStateList()[$healthProblem->state],
+                'patientName' => $healthProblem->patient->Full_name,
+                'doctorName' => $healthProblem->doctor->Full_name,
             ];
         }
 
