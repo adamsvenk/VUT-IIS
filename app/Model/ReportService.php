@@ -62,7 +62,7 @@ class ReportService
     {
         //tyhle hodnoty se vkládají vždy
         $tableValues = [
-            'Subject' => $values->Subject,
+            'Subject' => $values->subject,
             'Text' => $values->text,
             'DateTime'=> date('Y-m-d H:i:s'),
         ];
