@@ -73,6 +73,12 @@
 			$(this).parent().addClass("active");
 		});
 	</script>
+
+
+	<script>
+		var dt = new Date();
+		document.getElementById("demo").innerHTML = (("0"+dt.getDate()).slice(-2)) +"."+ (("0"+(dt.getMonth()+1)).slice(-2)) +"."+ (dt.getFullYear()) +" "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
+	</script>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
