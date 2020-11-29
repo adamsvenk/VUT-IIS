@@ -25,26 +25,37 @@
 		<a class="navbar-brand" href="/">
 			<img src="/logo.png" alt="logo" style="width:40px;">
 		</a>
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a class="nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" n:href="User:list">Uživatelé</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" n:href="Procedure:list">Hrazené úkony</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" n:href="Examination:my">Moje žádosti vyšetření</a>
-			</li>
-		</ul>
+		{if $user->isLoggedIn() == True}
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					{if $isAdmin or $isDoctor}
+						<a class="nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
+					{/if}
+				</li>
+				<li class="nav-item">
+					{if $isAdmin or $isInsuranceWorker}
+						<a class="nav-link" n:href="Procedure:list">Hrazené úkony</a>
+					{/if}
+				</li>
+				<li class="nav-item">
+					{if $isAdmin or $isDoctor}
+						<a class="nav-link" n:href="Examination:my">Moje žádosti vyšetření</a>
+					{/if}
+				</li>
+			</ul>
 
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-					<a class="nav-link" n:href="Sign:out">Odhlásit</a>
-			</li>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+						{if $isAdmin or $isDoctor}
+							<a class="nav-link" n:href="User:list">Uživatelé</a>
+						{/if}
+					</li>
+				<li class="nav-item">
+						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
+				</li>
 		</ul>
+		{/if}
+		
 	</nav>
 
 	<div class=container>

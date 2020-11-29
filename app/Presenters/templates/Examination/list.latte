@@ -1,19 +1,19 @@
 {block content}
-    <a n:href="HealthProblem:list">zpět</a>
+    <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
     <br><br>
 
     <h3>Žádosti o vyšetření pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
-    <a n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+    <a class="button-edit" type="create" n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
     <br><br>
 
-    <table>
-        <tr>
-            <td>Datum</td>
-            <td>Text</td>
-            <td>Stav</td>
-            <td>Přiřazeno lékaři</td>
-            <td colspan="2">Akce</td>
-        </tr>
+    <table class="table table-striped">
+        <thead class="thead-custom">
+            <th>Datum</th>
+            <th>Text</th>
+            <th>Stav</th>
+            <th>Přiřazeno lékaři</th>
+            <th colspan="2" style="text-align:center">Akce</th>
+        <thead>
         <tr n:foreach="$examinations as $examination">
             <td>{$examination['datetime']|truncate:18,''}</td>
             <td>{$examination['text']}</td>
