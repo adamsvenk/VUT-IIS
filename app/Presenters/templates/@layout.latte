@@ -35,6 +35,10 @@
 				<li class="nav-item">
 					{if $isAdmin or $isInsuranceWorker}
 						<a class="nav-link" n:href="Procedure:list">Hrazené úkony</a>
+					{/if}
+				</li>
+				<li class="nav-item">
+					{if $isAdmin or $isInsuranceWorker}
 						<a class="nav-link" n:href="ProcedureRequest:list">Žádosti o proplacení úkonů</a>
 					{/if}
 				</li>
