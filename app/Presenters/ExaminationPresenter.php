@@ -56,6 +56,8 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function beforeRender()
     {
+        parent::beforeRender();
+
         $this->template->healthProblemId = $this->healthProblemId;
     }
 
