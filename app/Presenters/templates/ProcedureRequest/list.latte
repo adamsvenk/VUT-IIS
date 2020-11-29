@@ -1,0 +1,29 @@
+{block content}
+    <br><br>
+
+    <h3>Žádosti o proplacení úkonů</h3>
+    <br><br>
+
+    <table class="table table-striped">
+        <thead class="thead-custom">
+        <th>Úkon</th>
+        <th>Doktor</th>
+        <th>Stav</th>
+        <th>Částka</th>
+        <th colspan="2">Akce</th>
+        </thead>
+        <tbody>
+        <tr n:foreach="$procedureRequests as $procedureRequest">
+            <td>{$procedureRequest['procedureName']}</td>
+            <td>{$procedureRequest['doctorName']}</td>
+            <td>{$procedureRequest['state']}</td>
+            <td>{$procedureRequest['price']}</td>
+
+            {if $procedureRequest['state'] === 'Zažádáno'}
+            <td><a n:href="ProcedureRequest:changeState  procedureRequestId=>$procedureRequest['id'], state=>'accepted'">schválit</a></td>
+            <td><a n:href="ProcedureRequest:changeState  procedureRequestId=>$procedureRequest['id'], state=>'rejected'">zamítnout</a></td>
+            {/if}
+        </tr>
+        </tbody>
+    </table>
+{/block}

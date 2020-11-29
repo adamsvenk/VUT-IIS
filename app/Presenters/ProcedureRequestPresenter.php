@@ -83,4 +83,27 @@ class ProcedureRequestPresenter extends LoggedPresenter
 
         $this->redirect('Examination:detail', ['examinationId' => $examinationId]);
     }
+
+    public function actionList()
+    {
+        $this->template->procedureRequests = $this->procedureRequestService->getAll();
+    }
+
+    /**
+     * @param int $procedureRequestId
+     * @param string $state
+     * @throws AbortException
+     */
+    public function actionChangeState(int $procedureRequestId, string $state)
+    {
+        try {
+            $this->procedureRequestService->changeState($procedureRequestId, $state);
+
+            $this->flashMessage('Stav žádosti byl změněn', 'success');
+        } catch (Exception $e) {
+            $this->flashMessage('Stav žádosti se nepodařilo změnit', 'danger');
+        }
+
+        $this->redirect('ProcedureRequest:list');
+    }
 }

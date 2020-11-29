@@ -42,6 +42,8 @@ class ReportPresenter extends LoggedPresenter
 
     public function beforeRender()
     {
+        parent::beforeRender();
+
         $this->template->examinationId = $this->examinationId;
         $this->template->healthProblemId = $this->healthProblemId;
     }
