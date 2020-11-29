@@ -31,7 +31,7 @@ class UserService
             $data[] = [
                 'id' => $user->id,
                 'username' => $user->username,
-                'role' => $user->role,
+                'role' => self::roles()[$user->role],
                 'fullName' => $user->Full_name,
                 'dateOfBirth' => $user->Date_of_birth,
                 'function' => $user->Function,
@@ -103,14 +103,12 @@ class UserService
 
     public static function roles(): array
     {
-        $roles = [
-            UserManager::ROLE_PATIENT,
-            UserManager::ROLE_DOCTOR,
-            UserManager::ROLE_INSURANCE_WORKER,
-            UserManager::ROLE_ADMIN,
+        return [
+            UserManager::ROLE_PATIENT => 'Pacient',
+            UserManager::ROLE_DOCTOR => 'Doktor',
+            UserManager::ROLE_INSURANCE_WORKER => 'Pracovník zdravotní pojišťovny',
+            UserManager::ROLE_ADMIN => 'Administrátor',
         ];
-
-        return array_combine($roles, $roles);
     }
 
     public function getAllByRole(string $role)
