@@ -35,6 +35,7 @@
 				<li class="nav-item">
 					{if $isAdmin or $isInsuranceWorker}
 						<a class="nav-link" n:href="Procedure:list">Hrazené úkony</a>
+						<a class="nav-link" n:href="ProcedureRequest:list">Žádosti o proplacení úkonů</a>
 					{/if}
 				</li>
 				<li class="nav-item">
@@ -54,8 +55,6 @@
 						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
 				</li>
 		</ul>
-		{/if}
-		
 	</nav>
 
 	<div class=container>

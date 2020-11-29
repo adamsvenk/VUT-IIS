@@ -42,6 +42,26 @@ class ProcedureRequestService
         $procedureRequest->delete();
     }
 
+    public function getAll(): array
+    {
+        $data = [];
+
+        $procedureRequests = $this->db->table(self::TABLE)->fetchAll();
+
+        /** @var stdClass $procedureRequest */
+        foreach ($procedureRequests as $procedureRequest) {
+            $data[] = [
+                'id' => $procedureRequest->id,
+                'state' => self::getStateList()[$procedureRequest->state],
+                'doctorName' => $procedureRequest->doctor->Full_name,
+                'procedureName' => $procedureRequest->procedure->name,
+                'price' => $procedureRequest->procedure->price,
+            ];
+        }
+
+        return $data;
+    }
+
     public function getByExamination(int $examinationId)
     {
         $data = [];
@@ -68,5 +88,20 @@ class ProcedureRequestService
             self::STATE_ACCEPTED => 'Schváleno',
             self::STATE_REJECTED => 'Zamítnuto'
         ];
+    }
+
+    public function changeState(int $procedureRequestId, string $state)
+    {
+        if (!in_array($state, array_keys(self::getStateList()))) {
+            throw new InvalidArgumentException('State not valid');
+        }
+
+        $procedureRequest = $this->db->table(self::TABLE)->get($procedureRequestId);
+
+        if ($procedureRequest === null) {
+            throw new InvalidArgumentException('ProcedureRequest not found');
+        }
+
+        $procedureRequest->update(['state' => $state]);
     }
 }
