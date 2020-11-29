@@ -36,7 +36,15 @@ form .required label {
 	background-color: #028090;
 }
 
-.nav-active {
-	background-color: red;
-	font-weight: bold;
+.logo {
+	height: 40px;
+}
+
+.logo:hover {
+	filter:drop-shadow(2px 1px 2px white);
+}
+
+.logo-active {
+	height: 40px;
+	filter:drop-shadow(2px 1px 2px white);
 }
