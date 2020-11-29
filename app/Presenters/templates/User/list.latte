@@ -1,13 +1,13 @@
 {block content}
-    <a class="user-administration" n:href="User:create">Vytvořit</a>
+    <a class="button-edit" type="add" class="user-administration" n:href="User:create">Vytvořit</a>
 
-    <table class="styled-table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-custom">
             <th>Celé jméno</th>
             <th>Funkce</th>
             <th>Uživatelské jméno</th>
             <th>Role</th>
-            <th colspan="2">Akce</th>
+            <th colspan="2" style="text-align: center">Akce</th>
         </thead>
         <tbody>
             <tr n:foreach="$users as $userArray">

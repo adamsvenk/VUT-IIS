@@ -17,70 +17,21 @@ form .required label {
 	font-weight: bold;
 }
 
-.nav-bar {
-	display: flex;
-	align-items: center;
+.navbar-custom {
 	background-color: #05668D;
-	height: 50px;
 }
 
-.nav-logo {
-	padding-left: 20px;
-	height: 50px;
-}
-
-.nav-bar a {
-	padding: 20px 20px;
-	color: white;
-	font-size: large;
-}
-
-.styled-table {
-	border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-}
-
-.styled-table thead tr {
-    background-color: #028090;
-    color: #ffffff;
-    text-align: left;
-}
-
-.styled-table th,
-.styled-table td {
-	padding: 12px 15px;
-}
-
-.styled-table thead a {
+.thead-custom {
+	background-color: #028090;
 	color: white;
 }
 
-.styled-table tbody tr {
-    border-bottom: thin solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: solid #028090;
-}
-
-.user-administration {
-	font-size: large;
+.button-edit {
+	display: block;
+	width: 100%;
+	line-height: 50px;
 	color: white;
-	background-color: #009879;
 	text-align: center;
-	line-height: 40px;
-}
-
-.container {
-	display: flex;
-	flex-direction: column;
-	max-width: 1000px;
-	margin-top: 25px;
+	margin: 20px 0;
+	background-color: #028090;
 }

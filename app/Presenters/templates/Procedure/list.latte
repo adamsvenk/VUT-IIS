@@ -1,10 +1,11 @@
 {block content}
-    <a class="user-administration" n:href="Procedure:create">Vytvořit</a>
+    <a class="button-edit" type="add" class="user-administration" n:href="Procedure:create">Vytvořit</a>
 
-    <table class="styled-table">
-        <thead>
-        <th>Jméno</th>
-        <th>Cena</th>
+    <table class="table table-striped">
+        <thead class="thead-custom">
+            <th>Jméno</th>
+            <th>Cena</th>
+            <th colspan="2" style="text-align: center">Akce</th>
         </thead>
         <tbody>
         <tr n:foreach="$procedures as $procedure">

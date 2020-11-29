@@ -1,13 +1,13 @@
 {block content}
-    <a class="user-administration" n:href="HealthProblem:create">Vytvořit</a>
+    <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
 
-    <table class="styled-table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-custom">
             <th>Názov problému</th>
             <th>Jméno</th>
             <th>Stav</th>
             <th>Popis problému</th>
-            <th>Oštrujúci lekár</th>
+            <th>Ošetrujíci&nbsp;lekár</th>
             <th colspan="4" style="text-align: center">Akce</th>
         </thead>
         <tbody>
@@ -17,7 +17,6 @@
                 <td>{$healthProblem['state']}</td>
                 <td>{$healthProblem['description']}</td>
                 <td>{$healthProblem['doctorName']}</td>
-
 
                 <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
                 <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>

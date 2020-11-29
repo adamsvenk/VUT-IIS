@@ -12,20 +12,37 @@
 	<meta charset="utf-8">
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Elektronická zdravotní knížka</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	{/block}
 </head>
 
 <body>
-	
-	<div class="nav-bar">
-		<a href="/"><img class="nav-logo" src="/logo.png" alt=""></a>
-		<a n:href="HealthProblem:list">Zdravotní problémy</a>
-		<a n:href="User:list">Uživatelé</a>
-		<a n:href="Procedure:list">Hrazené úkony</a>
-		<a n:href="Sign:out">Odhlásit</a>
-	</div>
+	<nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+		<a class="navbar-brand" href="/">
+			<img src="/logo.png" alt="logo" style="width:40px;">
+		</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" n:href="User:list">Uživatelé</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" n:href="Procedure:list">Hrazené úkony</a>
+			</li>
+		</ul>
+
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+					<a class="nav-link" n:href="Sign:out">Odhlásit</a>
+			</li>
+		</ul>
+	</nav>
 
 	<div class=container>
 
