@@ -35,3 +35,8 @@ form .required label {
 	margin: 20px 0;
 	background-color: #028090;
 }
+
+.nav-active {
+	background-color: red;
+	font-weight: bold;
+}
