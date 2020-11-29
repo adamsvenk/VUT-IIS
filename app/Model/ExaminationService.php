@@ -92,7 +92,7 @@ class ExaminationService
         //tyhle hodnoty se vkládají vždy
         $tableValues = [
             'Text' => $values->text,
-            'State' => $values->state,
+            'State' => 'waiting',
             'doctor_id' => $values->doctor,
         ];
 

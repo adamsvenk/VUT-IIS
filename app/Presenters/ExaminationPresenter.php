@@ -104,9 +104,6 @@ final class ExaminationPresenter extends LoggedPresenter
             ->addRule(Form::MAX_LENGTH, 'Maximální délka textu je 1000 znaků.', 300)
             ->setRequired('text je povinný');
 
-        $form->addSelect('state', 'Stav')
-            ->setItems(ExaminationService::getStateList());
-
         $form->addSelect('doctor', 'Doktor')
             ->setItems($this->userService->getAllByRole(UserManager::ROLE_DOCTOR));
 
