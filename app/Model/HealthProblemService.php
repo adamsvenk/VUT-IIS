@@ -87,7 +87,7 @@ class HealthProblemService
             return [];
         }
 
-        /** @var stdClass|null $user */
+        /** @var stdClass|null $healthProblem */
         $healthProblem = $this->db->table(self::HEALTH_PROBLEM_TABLE)->get($healthProblemId);
 
         if ($healthProblem === null) {
@@ -98,6 +98,7 @@ class HealthProblemService
             'name' => $healthProblem->Name,
             'description' => $healthProblem->Description,
             'state' => $healthProblem->state,
+            'doctor' => $healthProblem->doctor_id,
         ];
     }
 
@@ -115,6 +116,8 @@ class HealthProblemService
 
             $this->db->table(self::HEALTH_PROBLEM_TABLE)->insert($tableValues);
         } else {
+            $tableValues['doctor_id'] = $values->doctor;
+
             $healthProblem = $this->db->table(self::HEALTH_PROBLEM_TABLE)->get($healthProblemId);
 
             if (!$healthProblem) {

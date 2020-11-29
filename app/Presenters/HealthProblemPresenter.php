@@ -84,6 +84,9 @@ class HealthProblemPresenter extends LoggedPresenter
         /** @var Form $form */
         $form = $this['form'];
 
+        $form->addSelect('doctor', 'Odpovědný lékař')
+            ->setItems($this->userService->getAllByRole(UserManager::ROLE_DOCTOR));
+
         $form->setDefaults($this->healthProblemService->getDefaults($healthProblemId));
     }
 
