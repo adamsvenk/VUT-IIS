@@ -54,6 +54,13 @@ final class ExaminationPresenter extends LoggedPresenter
      */
     public $examinationId;
 
+    public function startup()
+    {
+        parent::startup();
+
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+    }
+    
     public function beforeRender()
     {
         parent::beforeRender();
@@ -63,6 +70,8 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function actionList(int $healthProblemId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        
         $this->healthProblemId = $healthProblemId;
 
         $this->template->healthProblem = $this->healthProblemService->get($healthProblemId);
@@ -71,11 +80,15 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function actionMy()
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->template->examinations = $this->examinationService->getAllByUser($this->user->getId());
     }
 
     public function actionDetail(int $examinationId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->template->stateMapping = ExaminationService::getStateList();
         $this->template->examination = $this->examinationService->get($examinationId);
         $this->template->reports = $this->reportService->getByExamination($examinationId);
@@ -84,12 +97,16 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function actionCreate(int $healthProblemId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->healthProblemId = $healthProblemId;
     }
 
 
     public function actionEdit(int $healthProblemId, int $examinationId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->healthProblemId = $healthProblemId;
         $this->examinationId = $examinationId;
 
@@ -146,6 +163,8 @@ final class ExaminationPresenter extends LoggedPresenter
      */
     public function actionDelete(int $healthProblemId, int $examinationId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         try {
             $this->examinationService->delete($examinationId);
 
@@ -164,6 +183,8 @@ final class ExaminationPresenter extends LoggedPresenter
      */
     public function actionStateChange(int $examinationId, string $state)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         try {
             $this->examinationService->changeState($examinationId, $state);
 

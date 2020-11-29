@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\HealthProblemService;
 use App\Model\ReportService;
+use App\Model\UserManager;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -40,6 +41,14 @@ class ReportPresenter extends LoggedPresenter
     
     public $DateTime;
 
+    public function startup()
+    {
+        parent::startup();
+
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+    }
+    
+    
     public function beforeRender()
     {
         parent::beforeRender();
@@ -50,6 +59,8 @@ class ReportPresenter extends LoggedPresenter
 
     public function actionList(int $healthProblemId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+         
         $this->healthProblemId = $healthProblemId;
 
         $this->template->healthProblem = $this->healthProblemService->get($healthProblemId);
@@ -58,16 +69,22 @@ class ReportPresenter extends LoggedPresenter
 
     public function actionCreate(int $healthProblemId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->healthProblemId = $healthProblemId;
     }
 
     public function actionCreateExamination(int $examinationId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->examinationId = $examinationId;
     }
 
     public function actionEditExamination(int $examinationId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->examinationId = $examinationId;
         $this->reportId = $reportId;
 
@@ -76,6 +93,8 @@ class ReportPresenter extends LoggedPresenter
 
     public function actionEdit(int $healthProblemId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->healthProblemId = $healthProblemId;
         $this->reportId = $reportId;
 
@@ -143,6 +162,8 @@ class ReportPresenter extends LoggedPresenter
      */
     public function actionDelete(int $healthProblemId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         try {
             $this->reportService->delete($reportId);
 
@@ -161,6 +182,8 @@ class ReportPresenter extends LoggedPresenter
      */
     public function actionDeleteExamination(int $examinationId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         try {
             $this->reportService->delete($reportId);
 
@@ -174,18 +197,24 @@ class ReportPresenter extends LoggedPresenter
 
     public function actionDetail(int $healthProblemId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+        
         $this->healthProblemId = $healthProblemId;
         $this->template->report = $this->reportService->get($reportId);
     }
 
     public function actionDetailExamination(int $examinationId, int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+        
         $this->examinationId = $examinationId;
         $this->template->report = $this->reportService->get($reportId);
     }
 
     public function actionImage(int $reportId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         /** @var stdClass $report */
         $report = $this->reportService->get($reportId);
 

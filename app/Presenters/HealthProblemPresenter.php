@@ -35,6 +35,8 @@ class HealthProblemPresenter extends LoggedPresenter
 
     public function renderList(): void
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
+        
         $this->template->healthProblems = $this->healthProblemService->getForUser($this->user->getId());
     }
 

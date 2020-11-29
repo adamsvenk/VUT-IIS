@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use App\Model\ProcedureService;
+use App\Model\UserManager;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -21,6 +22,15 @@ class ProcedurePresenter extends LoggedPresenter
     /** @var int|null */
     public $examinationId;
 
+    
+    public function startup()
+    {
+        parent::startup();
+
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_INSURANCE_WORKER]);
+    }
+    
+    
     public function renderList(): void
     {
         $this->template->procedures = $this->procedureService->getAll();
@@ -46,6 +56,9 @@ class ProcedurePresenter extends LoggedPresenter
 
     public function actionEdit(int $procedureId)
     {
+        
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_INSURANCE_WORKER]);
+        
         $this->procedureId = $procedureId;
 
         /** @var Form $form */
@@ -86,6 +99,10 @@ class ProcedurePresenter extends LoggedPresenter
      */
     public function actionDelete(int $procedureId): void
     {
+        
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_INSURANCE_WORKER]);
+        
+        
         try {
             $this->procedureService->delete($procedureId);
 

@@ -28,6 +28,8 @@ class UserPresenter extends LoggedPresenter
 
     public function renderList(): void
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        
         $this->template->users = $this->userService->getAll();
     }
 
@@ -64,6 +66,8 @@ class UserPresenter extends LoggedPresenter
 
     public function actionEdit(int $userId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        
         $this->userId = $userId;
 
         /** @var Form $form */
@@ -105,6 +109,8 @@ class UserPresenter extends LoggedPresenter
      */
     public function actionDelete(int $userId): void
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        
         try {
             $this->userService->delete($userId);
 

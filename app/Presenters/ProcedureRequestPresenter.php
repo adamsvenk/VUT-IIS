@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\ProcedureRequestService;
 use App\Model\ProcedureService;
+use App\Model\UserManager;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
@@ -27,9 +28,18 @@ class ProcedureRequestPresenter extends LoggedPresenter
      */
     public $procedureService;
 
+    public function startup()
+    {
+        parent::startup();
 
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_INSURANCE_WORKER]);
+    }
+    
+    
     public function actionCreate(int $examinationId)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         $this->examinationId = $examinationId;
         $this->template->examinationId = $examinationId;
     }
@@ -73,6 +83,8 @@ class ProcedureRequestPresenter extends LoggedPresenter
      */
     public function actionDelete(int $examinationId, int $procedureRequestId): void
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        
         try {
             $this->procedureRequestService->delete($procedureRequestId);
 
@@ -86,6 +98,8 @@ class ProcedureRequestPresenter extends LoggedPresenter
 
     public function actionList()
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_INSURANCE_WORKER]);
+        
         $this->template->procedureRequests = $this->procedureRequestService->getAll();
     }
 
@@ -96,6 +110,8 @@ class ProcedureRequestPresenter extends LoggedPresenter
      */
     public function actionChangeState(int $procedureRequestId, string $state)
     {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_INSURANCE_WORKER]);
+        
         try {
             $this->procedureRequestService->changeState($procedureRequestId, $state);
 
