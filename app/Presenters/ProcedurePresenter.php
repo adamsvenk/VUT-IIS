@@ -18,6 +18,9 @@ class ProcedurePresenter extends LoggedPresenter
     /** @var int|null */
     public $procedureId;
 
+    /** @var int|null */
+    public $examinationId;
+
     public function renderList(): void
     {
         $this->template->procedures = $this->procedureService->getAll();

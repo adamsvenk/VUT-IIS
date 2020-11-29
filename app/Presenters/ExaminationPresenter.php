@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\ExaminationService;
 use App\Model\HealthProblemService;
+use App\Model\ProcedureRequestService;
 use App\Model\ReportService;
 use App\Model\UserManager;
 use App\Model\UserService;
@@ -38,6 +39,12 @@ final class ExaminationPresenter extends LoggedPresenter
     public $reportService;
 
     /**
+     * @var ProcedureRequestService
+     * @inject
+     */
+    public $procedureRequestService;
+
+    /**
      * @var int|null
      */
     public $healthProblemId;
@@ -70,6 +77,7 @@ final class ExaminationPresenter extends LoggedPresenter
         $this->template->stateMapping = ExaminationService::getStateList();
         $this->template->examination = $this->examinationService->get($examinationId);
         $this->template->reports = $this->reportService->getByExamination($examinationId);
+        $this->template->procedureRequests = $this->procedureRequestService->getByExamination($examinationId);
     }
 
     public function actionCreate(int $healthProblemId)

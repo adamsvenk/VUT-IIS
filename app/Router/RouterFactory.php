@@ -48,6 +48,9 @@ final class RouterFactory
         $router->addRoute('/examinations/<examinationId>/detail/', 'Examination:detail');
         $router->addRoute('/examinations/<examinationId>/state-change/<state>', 'Examination:stateChange');
 
+        $router->addRoute('/examinations/<examinationId>/procedure-request/create', 'ProcedureRequest:create');
+        $router->addRoute('/examinations/<examinationId>/procedure-request/delete/<procedureRequestId>', 'ProcedureRequest:delete');
+
         $router->addRoute('procedures/list', 'Procedure:list');
         $router->addRoute('procedures/delete/<procedureId>', 'Procedure:delete');
         $router->addRoute('procedures/create', 'Procedure:create');

@@ -30,3 +30,4 @@ services:
 	- App\Model\ReportService
 	- App\Model\ExaminationService
 	- App\Model\ProcedureService
+	- App\Model\ProcedureRequestService

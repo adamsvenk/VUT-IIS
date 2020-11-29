@@ -35,6 +35,19 @@ class ProcedureService
         return $data;
     }
 
+    public function getList(): array
+    {
+        $data = [];
+
+        $procedures = $this->db->table(self::PROCEDURE_TABLE)->fetchAll();
+
+        foreach ($procedures as $procedure) {
+            $data[$procedure->id] = $procedure->name;
+        }
+
+        return $data;
+    }
+
     public function delete(int $procedureId): void
     {
         $procedure = $this->db->table(self::PROCEDURE_TABLE)->get($procedureId);

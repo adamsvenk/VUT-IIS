@@ -40,6 +40,30 @@
             </tbody>
         </table>
     {/if}
+    <br>
 
+    <h4>Žádosti o proplacení úkonů</h4>
+    {if $examination->State === 'in_progress'}<a n:href="ProcedureRequest:create examinationId=>$examination['id']">Vytvořit</a>{/if}
+
+    {if empty($procedureRequests)}
+        <p>Nebyly vloženy žádné žádosti o proplacení zdravotních úkonů</p>
+    {else}
+        <table class="table table-striped">
+            <thead class="thead-custom">
+            <th>Název</th>
+            <th>Doktor</th>
+            <th>Stav</th>
+        {if $examination->State === 'in_progress'}<th>Akce</th>{/if}
+            </thead>
+            <tbody>
+            <tr n:foreach="$procedureRequests as $procedureRequest">
+                <td>{$procedureRequest['procedureName']}</td>
+                <td>{$procedureRequest['doctorName']}</td>
+                <td>{$procedureRequest['state']}</td>
+                {if $examination->State === 'in_progress'}<td><a n:href="ProcedureRequest:delete examinationId=>$examination->id, procedureRequestId=>$procedureRequest['id']">smazat</a></td>{/if}
+            </tr>
+            </tbody>
+        </table>
+    {/if}
     
 {/block}
