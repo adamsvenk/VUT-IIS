@@ -22,11 +22,11 @@
 
 <body>
 	<nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+		<a class="navbar-brand" href="/">
+			<img src="/logo.png" alt="logo" style="width:40px;">
+		</a>
 		{if $user->isLoggedIn() == True}
 			<ul class="nav navbar-nav mr-auto">
-				<li>
-					<a class="nav-link" href="/"><img src="/logo.png" alt="logo" style="width:40px;"></a>
-				</li>
 				<li class="nav-item">
 					{if $isAdmin or $isDoctor or $isPatient}
 						<a n:class="$presenter->isLinkCurrent('HealthProblem:*') ? nav-link : nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
