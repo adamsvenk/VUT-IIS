@@ -1,39 +1,46 @@
 {block content}
-    <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
+    <div class="list-content">
+        <div class="list-header">
+            <h2>Zdravotní problémy</h2>
+            <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-striped">
+                <thead class="thead-custom">
+                    <th>Názov&nbsp;problému</th>
+                    <th>Jméno</th>
+                    <th>Stav</th>
+                    <th>Popis&nbsp;problému</th>
+                    <th>Ošetrujíci&nbsp;lekár</th>
+                    {if $isPatient}
+                        <th colspan="1" style="text-align: center">Akce</th>
+                    {else}
+                        <th colspan="4" style="text-align: center">Akce</th>
+                    {/if}
+                </thead>
+                <tbody>
+                    <tr n:foreach="$healthProblems as $healthProblem">
+                        <td>{$healthProblem['name']}</td>
+                        <td>{$healthProblem['patientName']}</td>
+                        <td>{$healthProblem['state']}</td>
+                        <td>{$healthProblem['description']}</td>
+                        <td>{$healthProblem['doctorName']}</td>
 
-    <table class="table table-striped">
-        <thead class="thead-custom">
-            <th>Názov problému</th>
-            <th>Jméno</th>
-            <th>Stav</th>
-            <th>Popis problému</th>
-            <th>Ošetrujíci&nbsp;lekár</th>
-            {if $isPatient}
-                <th colspan="1" style="text-align: center">Akce</th>
-            {else}
-                <th colspan="4" style="text-align: center">Akce</th>
-            {/if}
-        </thead>
-        <tbody>
-            <tr n:foreach="$healthProblems as $healthProblem">
-                <td>{$healthProblem['name']}</td>
-                <td>{$healthProblem['patientName']}</td>
-                <td>{$healthProblem['state']}</td>
-                <td>{$healthProblem['description']}</td>
-                <td>{$healthProblem['doctorName']}</td>
+                        {if !$isPatient}
+                            <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
+                            <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>
+                        {/if}
 
-                {if !$isPatient}
-                    <td><a n:href="HealthProblem:delete healthProblemId=>$healthProblem['id']">smazat</a></td>
-                    <td><a n:href="HealthProblem:edit healthProblemId=>$healthProblem['id']">editovat</a></td>
-                {/if}
+                        <td><a n:href="Report:list healthProblemId=>$healthProblem['id']">Lékařské zprávy</a></td>
 
-                <td><a n:href="Report:list healthProblemId=>$healthProblem['id']">Lékařské zprávy</a></td>
-
-                {if !$isPatient}
-                    <td><a n:href="Examination:list healthProblemId=>$healthProblem['id']">Žádosti o vyšetření</a></td>
-                {/if}
-                
-            </tr>
-        </tbody>
-    </table>
+                        {if !$isPatient}
+                            <td><a n:href="Examination:list healthProblemId=>$healthProblem['id']">Žádosti o vyšetření</a></td>
+                        {/if}
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {/block}

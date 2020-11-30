@@ -1,4 +1,11 @@
 {block content}
-    <a class="button-edit" type="create" n:href="User:list">zpět</a>
-    {control createForm}
+    <div class="list-content">
+        <div class="list-header">
+            <a class="button-edit" type="edit" n:href="User:list">zpět</a>
+        </div>
+        <hr>
+        <div>
+            {control createForm}
+        </div>
+    </div>
 {/block}

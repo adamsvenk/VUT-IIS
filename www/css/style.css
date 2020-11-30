@@ -28,12 +28,21 @@ form .required label {
 
 .button-edit {
 	display: block;
-	width: 100%;
-	line-height: 50px;
-	color: white;
+	width: 25%;
+	line-height: 40px;
+	color: #028090;
 	text-align: center;
-	margin: 20px 0;
+	background-color: white;
+	border: 2px solid #028090;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+.button-edit:hover {
+	color: white;
 	background-color: #028090;
+	text-decoration: none;
+	transition: 0.3s;
 }
 
 .logo {
@@ -47,4 +56,44 @@ form .required label {
 .logo-active {
 	height: 40px;
 	filter:drop-shadow(2px 1px 2px white);
+}
+
+.list-content {
+	margin-top: 25px;
+	padding: 20px;
+	border: 2px solid #028090;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px #028090;
+}
+
+.list-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+}
+
+.list-content hr {
+	background-color: #028090;
+	height: 1px;
+}
+
+.homepage-banners {
+	display: flex;
+	margin-top: 25px;
+	border: 2px solid #028090;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px #028090;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.homepage-card {
+	margin: 20px;
+	width: 235px;
+	height: 250px;
+	border-radius: 5px;
+	background-color: #0B4F6C;
+	color: white;
 }

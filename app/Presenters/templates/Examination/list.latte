@@ -1,27 +1,32 @@
 {block content}
-    <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
-    <br><br>
+    <div class="list-content">
+        <div class="list-header">
+            <h2>Žádosti o vyšetření pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h2>
+        </div>
+        <div class="list-header">
+            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
+            <a class="button-edit" type="create" n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-striped">
+                <thead class="thead-custom">
+                    <th>Datum</th>
+                    <th>Text</th>
+                    <th>Stav</th>
+                    <th>Přiřazeno lékaři</th>
+                    <th colspan="2" style="text-align:center">Akce</th>
+                <thead>
+                <tr n:foreach="$examinations as $examination">
+                    <td>{$examination['datetime']|truncate:18,''}</td>
+                    <td>{$examination['text']}</td>
+                    <td>{$examination['state']}</td>
+                    <td>{$examination['doctorName']}</td>
 
-    <h3>Žádosti o vyšetření pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
-    <a class="button-edit" type="create" n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
-    <br><br>
-
-    <table class="table table-striped">
-        <thead class="thead-custom">
-            <th>Datum</th>
-            <th>Text</th>
-            <th>Stav</th>
-            <th>Přiřazeno lékaři</th>
-            <th colspan="2" style="text-align:center">Akce</th>
-        <thead>
-        <tr n:foreach="$examinations as $examination">
-            <td>{$examination['datetime']|truncate:18,''}</td>
-            <td>{$examination['text']}</td>
-            <td>{$examination['state']}</td>
-            <td>{$examination['doctorName']}</td>
-
-            <td><a n:href="Examination:delete healthProblemId=>$healthProblemId, examinationId=>$examination['id']">smazat</a></td>
-            <td><a n:href="Examination:edit healthProblemId=>$healthProblemId, examinationId=>$examination['id']">editovat</a></td>
-        </tr>
-    </table>
+                    <td><a n:href="Examination:delete healthProblemId=>$healthProblemId, examinationId=>$examination['id']">smazat</a></td>
+                    <td><a n:href="Examination:edit healthProblemId=>$healthProblemId, examinationId=>$examination['id']">editovat</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 {/block}

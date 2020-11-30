@@ -1,23 +1,27 @@
 {block content}
-    <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
-    <br><br>
-
-    <h3>Lékařské zprávy pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
-    <a class="button-edit" type="create" n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>
-    <br><br>
-
-    <table class="table table-striped">
-        <thead class="thead-custom">
-            <th>Název</th>
-            <th colspan="3" style="text-align: center">Akce</th>
-        </thead>
-        <tbody>
-            <tr n:foreach="$reports as $report">
-                <td>{$report['subject']}</td>
-                <td><a n:href="Report:delete healthProblemId=>$healthProblemId, reportId=>$report['id']">smazat</a></td>
-                <td><a n:href="Report:edit healthProblemId=>$healthProblemId, reportId=>$report['id']">editovat</a></td>
-                <td><a n:href="Report:detail healthProblemId=>$healthProblemId, reportId=>$report['id']">detail</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-content">
+        <div class="list-header">
+            <h3>Lékařské zprávy pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
+        </div>
+        <div class="list-header">
+            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
+            <a class="button-edit" type="create" n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-striped">
+            <thead class="thead-custom">
+                <th>Název</th>
+                <th colspan="3" style="text-align: center">Akce</th>
+            </thead>
+            <tbody>
+                <tr n:foreach="$reports as $report">
+                    <td>{$report['subject']}</td>
+                    <td><a n:href="Report:delete healthProblemId=>$healthProblemId, reportId=>$report['id']">smazat</a></td>
+                    <td><a n:href="Report:edit healthProblemId=>$healthProblemId, reportId=>$report['id']">editovat</a></td>
+                    <td><a n:href="Report:detail healthProblemId=>$healthProblemId, reportId=>$report['id']">detail</a></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
 {/block}

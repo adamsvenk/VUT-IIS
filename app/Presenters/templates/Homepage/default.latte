@@ -1,17 +1,13 @@
-{* This is the welcome page, you can delete it *}
-
 {block content}
-	<div class="card" style="width: 18rem; margin:20px; background-color: #264653; color:white;">
-		<div class="card-body">
-			<h5 class="card-title">Vitajte,</h5>
-			<p class="card-text">{$user->getIdentity()->Full_name}</p>
+	<div class="list-content">
+        <div class="list-header">
+			<h2>Vitajte, {$user->getIdentity()->Full_name}</h2>
 		</div>
 	</div>
 
-	<div class="card" style="width: 18rem; margin:20px; background-color: #2A9D8F; color:white;">
-		<div class="card-body">
-			<h5 class="card-title">Dnes je</h5>
-			<p class="card-text" id="demo"></p>
+	<div class="list-content">
+        <div class="list-header">
+			<h2 id="time"></h2>
 		</div>
 	</div>		
 {/block}

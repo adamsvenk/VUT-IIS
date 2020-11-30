@@ -1,23 +1,30 @@
 {block content}
-    <a class="button-edit" type="add" class="user-administration" n:href="User:create">Vytvořit</a>
-
-    <table class="table table-striped">
-        <thead class="thead-custom">
-            <th>Celé jméno</th>
-            <th>Funkce</th>
-            <th>Uživatelské jméno</th>
-            <th>Role</th>
-            <th colspan="2" style="text-align: center">Akce</th>
-        </thead>
-        <tbody>
-            <tr n:foreach="$users as $userArray">
-                <td>{$userArray['fullName']}</td>
-                <td>{$userArray['function']}</td>
-                <td>{$userArray['username']}</td>
-                <td>{$userArray['role']}</td>
-                <td><a n:href="User:delete userId=>$userArray['id']">smazat</a></td>
-                <td><a n:href="User:edit userId=>$userArray['id']">editovat</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-content">
+        <div class="list-header">
+            <h2>Užívatelé</h2>
+            <a class="button-edit" type="add" class="user-administration" n:href="User:create">Vytvořit</a>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-striped">
+                <thead class="thead-custom">
+                    <th>Celé jméno</th>
+                    <th>Funkce</th>
+                    <th>Uživatelské jméno</th>
+                    <th>Role</th>
+                    <th colspan="2" style="text-align: center">Akce</th>
+                </thead>
+                <tbody>
+                    <tr n:foreach="$users as $userArray">
+                        <td>{$userArray['fullName']}</td>
+                        <td>{$userArray['function']}</td>
+                        <td>{$userArray['username']}</td>
+                        <td>{$userArray['role']}</td>
+                        <td><a n:href="User:delete userId=>$userArray['id']">smazat</a></td>
+                        <td><a n:href="User:edit userId=>$userArray['id']">editovat</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {/block}

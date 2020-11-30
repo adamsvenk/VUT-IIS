@@ -44,14 +44,14 @@
 						<a n:class="$presenter->isLinkCurrent('Examination:*') ? active, nav-link : nav-link"  n:href="Examination:my">Moje žádosti vyšetření</a>
 					{/if}
 				</li>
-			</ul>
-
-			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 						{if $isAdmin or $isDoctor}
 							<a n:class="$presenter->isLinkCurrent('User:*') ? active, nav-link : nav-link"  n:href="User:list">Uživatelé</a>
 						{/if}
-					</li>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
 				</li>
@@ -60,31 +60,27 @@
 	</nav>
 
 	<div class=container>
-
 		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
-
 		{include content}
 	</div>
 
 	{block scripts}
-	<script>
-		$(".nav a").on("click", function() {
-			$(".nav").find(".active").removeClass("active");
-			$(this).parent().addClass("active");
-		});
-	</script>
-
-
-	<script>
-		var dt = new Date();
-		document.getElementById("demo").innerHTML = (("0"+dt.getDate()).slice(-2)) +"."+ (("0"+(dt.getMonth()+1)).slice(-2)) +"."+ (dt.getFullYear()) +" "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
-	</script>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
-	<script src="{$basePath}/js/main.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script>
+			$(".nav a").on("click", function() {
+				$(".nav").find(".active").removeClass("active");
+				$(this).parent().addClass("active");
+			});
+		</script>
+		<script>
+			var dt = new Date();
+			document.getElementById("time").innerHTML = "Dnes je " + (("0"+dt.getDate()).slice(-2)) +"."+ (("0"+(dt.getMonth()+1)).slice(-2)) +"."+ (dt.getFullYear()) +" "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
+		</script>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+		<script src="{$basePath}/js/main.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	{/block}
 </body>
 </html>
