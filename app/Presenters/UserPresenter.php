@@ -7,6 +7,9 @@ use App\Model\UserService;
 use Exception;
 use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\HiddenField;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Forms\Controls\TextInput;
 
 class UserPresenter extends LoggedPresenter
 {
@@ -23,7 +26,7 @@ class UserPresenter extends LoggedPresenter
     {
         parent::startup();
 
-        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
     }
 
     public function renderList(): void
@@ -36,6 +39,8 @@ class UserPresenter extends LoggedPresenter
     public function createComponentCreateForm()
     {
         $form = new Form();
+
+        $form->addHidden('backlink');
 
         $form->addText('username', 'Uživatelské jméno')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka uživatelského jména je 45 znaků.', 45)
@@ -62,6 +67,24 @@ class UserPresenter extends LoggedPresenter
         $form->onSuccess[] = [$this, 'formSuccess'];
 
         return $form;
+    }
+
+    public function actionCreatePatient()
+    {
+        /** @var Form $form */
+        $form = $this['createForm'];
+
+        /** @var SelectBox $role */
+        $role = $form['role'];
+        $role->setItems([UserManager::ROLE_PATIENT => 'Pacient']);
+
+        /** @var TextInput $function */
+        $function = $form['function'];
+        $function->setDisabled(true);
+
+        /** @var HiddenField $backlink */
+        $backlink = $form['backlink'];
+        $backlink->setDefaultValue('HealthProblem:create');
     }
 
     public function actionEdit(int $userId)
@@ -98,6 +121,10 @@ class UserPresenter extends LoggedPresenter
             } else {
                 $this->flashMessage('Uživatele se nepodařilo upravit', 'danger');
             }
+        }
+
+        if (!empty($form->getValues()->backlink)) {
+            $this->redirect($form->getValues()->backlink);
         }
 
         $this->redirect('User:list');

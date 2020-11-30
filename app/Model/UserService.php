@@ -64,8 +64,11 @@ class UserService
             'role' => $values->role,
             'Full_name' => $values->fullName ?: null,
             'Date_of_birth' => Utils::dateStringToObject($values->date),
-            'Function' => $values->function ?: null,
         ];
+
+        if (isset($values->function)) {
+            $tableValues['Function'] = $values->function;
+        }
 
         if (!empty($values->password)) {
             $tableValues['password'] = $this->passwords->hash($values->password);

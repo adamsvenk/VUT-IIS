@@ -21,6 +21,7 @@ final class RouterFactory
 		$router->addRoute('users/list', 'User:list');
 		$router->addRoute('users/delete/<userId>', 'User:delete');
 		$router->addRoute('users/create', 'User:create');
+		$router->addRoute('users/create-patient', 'User:createPatient');
 		$router->addRoute('users/edit/<userId>', 'User:edit');
 
 		$router->addRoute('/health-problems/list', 'HealthProblem:list');
