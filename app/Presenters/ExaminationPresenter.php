@@ -58,7 +58,7 @@ final class ExaminationPresenter extends LoggedPresenter
     {
         parent::startup();
 
-        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
     }
     
     public function beforeRender()
@@ -70,7 +70,7 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function actionList(int $healthProblemId)
     {
-        $this->allowedRoles([UserManager::ROLE_ADMIN]);
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
         
         $this->healthProblemId = $healthProblemId;
 
@@ -80,14 +80,14 @@ final class ExaminationPresenter extends LoggedPresenter
 
     public function actionMy()
     {
-        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
         
         $this->template->examinations = $this->examinationService->getAllByUser($this->user->getId());
     }
 
     public function actionDetail(int $examinationId)
     {
-        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
         
         $this->template->stateMapping = ExaminationService::getStateList();
         $this->template->examination = $this->examinationService->get($examinationId);
