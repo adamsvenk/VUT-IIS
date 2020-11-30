@@ -48,6 +48,11 @@ class UserService
         if ($user === null) {
             throw new InvalidArgumentException('User not found');
         }
+        
+        if($user['role'] === 'patient')
+        {
+             $this->db->table('Health_problem')->where('patient_id', $userId)->delete();
+        }
 
         $this->db->table('User')->where('id', $userId)->delete();
     }
