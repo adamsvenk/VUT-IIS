@@ -24,45 +24,60 @@
 		</a>
 		{if $user->isLoggedIn() == True}
 			<ul class="nav navbar-nav mr-auto">
-				<li class="nav-item">
-					{if $isAdmin or $isDoctor or $isPatient}
-						<a n:class="$presenter->isLinkCurrent('HealthProblem:*') ? active, nav-link : nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
-					{/if}
-				</li>
-				<li class="nav-item">
-					{if $isAdmin or $isInsuranceWorker}
-						<a n:class="$presenter->isLinkCurrent('Procedure:*') ? active, nav-link : nav-link"  n:href="Procedure:list">Hrazené úkony</a>
-					{/if}
-				</li>
-				<li class="nav-item">
-					{if $isAdmin or $isInsuranceWorker}
-						<a n:class="$presenter->isLinkCurrent('ProcedureRequest:*') ? active, nav-link : nav-link"  n:href="ProcedureRequest:list">Žádosti o proplacení úkonů</a>
-					{/if}
-				</li>
-				<li class="nav-item">
-					{if $isAdmin or $isDoctor}
-						<a n:class="$presenter->isLinkCurrent('Examination:*') ? active, nav-link : nav-link"  n:href="Examination:my">Moje žádosti vyšetření</a>
-					{/if}
-				</li>
-				<li class="nav-item">
-						{if $isAdmin or $isDoctor}
-							<a n:class="$presenter->isLinkCurrent('User:*') ? active, nav-link : nav-link"  n:href="User:list">Uživatelé</a>
+					<li class="nav-item">
+						{if $isAdmin or $isDoctor or $isPatient}
+							<a n:class="$presenter->isLinkCurrent('HealthProblem:*') ? active, nav-link : nav-link" n:href="HealthProblem:list">Zdravotní problémy</a>
 						{/if}
-				</li>
+					</li>
+					<li class="nav-item">
+						{if $isAdmin or $isInsuranceWorker}
+							<a n:class="$presenter->isLinkCurrent('Procedure:*') ? active, nav-link : nav-link"  n:href="Procedure:list">Hrazené úkony</a>
+						{/if}
+					</li>
+					<li class="nav-item">
+						{if $isAdmin or $isInsuranceWorker}
+							<a n:class="$presenter->isLinkCurrent('ProcedureRequest:*') ? active, nav-link : nav-link"  n:href="ProcedureRequest:list">Žádosti o proplacení úkonů</a>
+						{/if}
+					</li>
+					<li class="nav-item">
+						{if $isAdmin or $isDoctor}
+							<a n:class="$presenter->isLinkCurrent('Examination:*') ? active, nav-link : nav-link"  n:href="Examination:my">Moje žádosti vyšetření</a>
+						{/if}
+					</li>
+					<li class="nav-item">
+							{if $isAdmin or $isDoctor}
+								<a n:class="$presenter->isLinkCurrent('User:*') ? active, nav-link : nav-link"  n:href="User:list">Uživatelé</a>
+							{/if}
+					</li>
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
 				</li>
-		</ul>
+			</ul>
+		{else}
+			<ul class="nav navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link active" href="/">Elektronická zdravotní knížka</a>
+				</li>
+			</ul>
+
 		{/if}
+		
 	</nav>
 
-	<div class=container>
+	<div class="container">
 		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 		{include content}
 	</div>
+
+	<footer class="footer">
+		<hr>
+		<div>
+			<p>Elektronická zdravotní knížka</p>
+		</div>
+	</footer>
 
 	{block scripts}
 		<script>

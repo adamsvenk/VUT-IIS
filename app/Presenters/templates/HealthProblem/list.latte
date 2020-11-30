@@ -5,14 +5,14 @@
             <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
         </div>
         <hr>
-        <div>
+        <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-custom">
-                    <th>Názov&nbsp;problému</th>
+                    <th>Název&nbsp;problému</th>
                     <th>Jméno</th>
                     <th>Stav</th>
                     <th>Popis&nbsp;problému</th>
-                    <th>Ošetrujíci&nbsp;lekár</th>
+                    <th>Ošetřující&nbsp;lékař</th>
                     {if $isPatient}
                         <th colspan="1" style="text-align: center">Akce</th>
                     {else}
