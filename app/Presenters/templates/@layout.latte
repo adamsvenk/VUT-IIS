@@ -53,6 +53,11 @@
 
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
+					{if $isAdmin or $isDoctor or $isPatient}
+						<a n:class="$presenter->isLinkCurrent('User:*') ? active, nav-link : nav-link" n:href="User:list">Můj profil</a>
+					{/if}
+				</li>
+				<li class="nav-item">
 						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
 				</li>
 			</ul>
