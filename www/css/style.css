@@ -124,3 +124,11 @@ form .required label {
 	background-color: #028090;
 	height: 2px;
 }
+
+.alert {
+	margin-top: 25px;
+}
+
+.alert- {
+	margin-top: 25px;
+}
