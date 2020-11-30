@@ -58,7 +58,7 @@ class HealthProblemPresenter extends LoggedPresenter
         $form->addSelect('state', 'Stav')
             ->setItems(HealthProblemService::getStateList());
 
-        $form->addSubmit('submit');
+        $form->addSubmit('submit', 'Uložit');
 
         $form->onSuccess[] = [$this, 'formSuccess'];
 

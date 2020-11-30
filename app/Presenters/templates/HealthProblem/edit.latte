@@ -6,7 +6,24 @@
         </div>
         <hr>
         <div>
-            {control form}
+            {form form}
+                <table>
+                <tr n:foreach="$form->controls as $name => $field">
+                    {if $name != 'submit'}
+                        <th>{label $name /}<th>
+                        <td>{input $name}</td>
+                    {/if}
+                    <td n:ifcontent>{inputError $name}</td>
+                </tr>
+                <tr n:foreach="$form->controls as $name => $field">
+                    {if $name == 'submit'}
+                        <th>{label $name /}<th>
+                        <td>{input $name}</td>
+                    {/if}
+                    <td n:ifcontent>{inputError $name}</td>
+                </tr>
+                </table>
+            {/form}
         </div>
     </div>
 {/block}
