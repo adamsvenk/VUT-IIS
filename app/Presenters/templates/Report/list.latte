@@ -12,13 +12,19 @@
             <table class="table table-striped">
             <thead class="thead-custom">
                 <th>Název</th>
+                {if $isAdmin || $isDoctor}
                 <th colspan="3" style="text-align: center">Akce</th>
+                {else}
+                    <th style="text-align: center">Akce</th>
+                {/if}
             </thead>
             <tbody>
                 <tr n:foreach="$reports as $report">
                     <td>{$report['subject']}</td>
+                    {if $isAdmin || $isDoctor}
                     <td><a n:href="Report:delete healthProblemId=>$healthProblemId, reportId=>$report['id']">smazat</a></td>
                     <td><a n:href="Report:edit healthProblemId=>$healthProblemId, reportId=>$report['id']">editovat</a></td>
+                    {/if}
                     <td><a n:href="Report:detail healthProblemId=>$healthProblemId, reportId=>$report['id']">detail</a></td>
                 </tr>
             </tbody>
