@@ -4,6 +4,7 @@ namespace App\Model;
 
 use InvalidArgumentException;
 use Nette\Database\Context;
+use Nette\Database\Table\ActiveRow;
 use Nette\Security\Passwords;
 use stdClass;
 
@@ -14,6 +15,11 @@ class UserService
 
     /** @var Passwords */
     private $passwords;
+
+    private const STATES = [
+        0 => 'Dekativovaný',
+        1 => 'Aktivní',
+    ];
 
     public function __construct(Context $db, Passwords $passwords)
     {
@@ -35,6 +41,8 @@ class UserService
                 'fullName' => $user->Full_name,
                 'dateOfBirth' => $user->Date_of_birth,
                 'function' => $user->Function,
+                'is_active' => $user->is_active,
+                'state' => self::STATES[$user->is_active],
             ];
         }
 
@@ -145,5 +153,17 @@ class UserService
         }
 
         return $data;
+    }
+
+    public function flipState(int $userId)
+    {
+        /** @var ActiveRow $user */
+        $user = $this->db->table('User')->get($userId);
+
+        if ($user->is_active === 1) {
+            $user->update(['is_active' => 0]);
+        } else {
+            $user->update(['is_active' => 1]);
+        }
     }
 }

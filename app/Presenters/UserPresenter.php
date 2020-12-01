@@ -162,4 +162,17 @@ class UserPresenter extends LoggedPresenter
     {
         $this->template->currentUser = $this->userService->get($this->user->getId());
     }
+
+    public function actionActive(int $userId)
+    {
+        try {
+            $this->userService->flipState($userId);
+
+            $this->flashMessage('Stav uživatele byl změněn', 'success');
+        } catch (Exception $e) {
+            $this->flashMessage('Stav uživatele se nepodařilo změnit', 'danger');
+        }
+
+        $this->redirect('User:list');
+    }
 }

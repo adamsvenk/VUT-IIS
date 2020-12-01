@@ -54,6 +54,7 @@ final class UserManager implements Nette\Security\IAuthenticator
 
 		$row = $this->database->table(self::TABLE_NAME)
 			->where(self::COLUMN_NAME, $username)
+            ->where('is_active', 1)
 			->fetch();
 
 		if (!$row) {
