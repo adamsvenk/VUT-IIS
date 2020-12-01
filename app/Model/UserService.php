@@ -73,10 +73,13 @@ class UserService
     {
         $tableValues = [
             'username' => $values->username,
-            'role' => $values->role,
             'Full_name' => $values->fullName ?: null,
             'Date_of_birth' => Utils::dateStringToObject($values->date),
         ];
+
+        if (isset($values->role)) {
+            $tableValues['role'] = $values->role;
+        }
 
         if (isset($values->function)) {
             $tableValues['Function'] = $values->function;

@@ -88,10 +88,8 @@ class UserPresenter extends LoggedPresenter
         $backlink->setDefaultValue('HealthProblem:create');
     }
 
-    public function actionEdit(int $userId)
+    public function actionEdit(int $userId, ?string $backLink = null)
     {
-        $this->allowedRoles([UserManager::ROLE_ADMIN]);
-        
         $this->userId = $userId;
 
         /** @var Form $form */
@@ -99,6 +97,16 @@ class UserPresenter extends LoggedPresenter
 
         $form['password']->setRequired(false);
         $form->setDefaults($this->userService->getDefaults($userId));
+
+        /** @var SelectBox $role */
+        $role = $form['role'];
+        $form->removeComponent($role);
+
+        /** @var HiddenField $backlink */
+        $backlinkInput = $form['backlink'];
+        if ($backLink !== null) {
+            $backlinkInput->setDefaultValue($backLink);
+        }
     }
 
     /**
