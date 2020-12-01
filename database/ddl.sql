@@ -11,7 +11,7 @@ create table User
 	is_deleted tinyint default 0 not null,
 	constraint id
 		unique (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 alter table User
 	add primary key (id);
@@ -31,7 +31,7 @@ create table Health_problem
 			on update cascade on delete cascade,
 	constraint fk_Health_problem_User1
 		foreign key (patient_id) references User (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 create index fk_Health_problem_User1_idx
 	on Health_problem (patient_id);
@@ -55,7 +55,7 @@ create table Examination_request
 	constraint fk_Examination_request_User1
 		foreign key (doctor_id) references User (id)
 			on update set null on delete set null
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 create index fk_Examination_request_Health_problem1_idx
 	on Examination_request (health_problem_id);
@@ -87,7 +87,7 @@ create table Health_report
 	constraint fk_Health_report_user_id
 		foreign key (doctor_id) references User (id)
 			on update set null on delete set null
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 create index fk_Health_report_Health_problem1_idx
 	on Health_report (health_problem_id);
@@ -105,7 +105,7 @@ create table `procedure`
 	price int not null,
 	constraint procedure_id_uindex
 		unique (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 alter table `procedure`
 	add primary key (id);
@@ -127,7 +127,7 @@ create table procedure_payment_request
 			on update cascade on delete cascade,
 	constraint procedure_payment_request_procedure_id_fk
 		foreign key (procedure_id) references `procedure` (id)
-);
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 alter table procedure_payment_request
 	add primary key (id);
