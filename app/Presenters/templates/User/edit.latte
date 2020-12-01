@@ -2,7 +2,11 @@
     <div class="list-content">
         <div class="list-header">
             <h2>Upravit uživatele</h2>
-            <a class="button-edit" type="edit" n:href="User:list">zpět</a>
+            {if $backLink}
+                <a class="button-edit" type="edit" n:href="$backLink">zpět</a>
+            {else}
+                <a class="button-edit" type="edit" n:href="User:list">zpět</a>
+            {/if}
         </div>
         <hr>
         <div>

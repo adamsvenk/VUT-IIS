@@ -97,6 +97,7 @@ class UserPresenter extends LoggedPresenter
 
     public function actionEdit(int $userId, ?string $backLink = null)
     {
+        $this->template->backLink = $backLink;
         $this->userId = $userId;
 
         /** @var Form $form */
