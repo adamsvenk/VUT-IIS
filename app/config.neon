@@ -16,7 +16,7 @@ session:
 
 
 database:
-	dsn: 'mysql:host=localhost;dbname=iis'
+	dsn: 'mysql:host=165.22.81.91;dbname=iis'
 	user: iis
 	password: iis-database
 
