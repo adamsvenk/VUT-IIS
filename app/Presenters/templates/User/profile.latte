@@ -1,0 +1,16 @@
+{block content}
+    <h2>Můj profil</h2>
+
+    <p><b>Celé jméno:</b> {$currentUser->Full_name}</p>
+    <p><b>Uživatelské jméno:</b> {$currentUser->username}</p>
+    <p><b>Role:</b> {$currentUser->role}</p>
+
+    {if $currentUser->Date_of_birth}
+        <p><b>Datum narození:</b> {$currentUser->Date_of_birth->format('j. n. Y')}</p>
+    {/if}
+
+    {if $currentUser->Function}
+        <p><b>Funkce:</b> {$currentUser->Function}</p>
+    {/if}
+
+{/block}

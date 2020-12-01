@@ -22,13 +22,6 @@ class UserPresenter extends LoggedPresenter
     /** @var int|null */
     public $userId;
 
-    public function startup()
-    {
-        parent::startup();
-
-        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
-    }
-
     public function renderList(): void
     {
         $this->allowedRoles([UserManager::ROLE_ADMIN]);
@@ -67,6 +60,14 @@ class UserPresenter extends LoggedPresenter
         $form->onSuccess[] = [$this, 'formSuccess'];
 
         return $form;
+    }
+
+    /**
+     * @throws AbortException
+     */
+    public function actionCreate()
+    {
+        $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR]);
     }
 
     public function actionCreatePatient()
@@ -147,5 +148,10 @@ class UserPresenter extends LoggedPresenter
         }
 
         $this->redirect('User:list');
+    }
+
+    public function renderProfile()
+    {
+        $this->template->currentUser = $this->userService->get($this->user->getId());
     }
 }

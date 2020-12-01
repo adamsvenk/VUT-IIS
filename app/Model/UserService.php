@@ -41,6 +41,18 @@ class UserService
         return $data;
     }
 
+    public function get(int $userId)
+    {
+        $user = $this->db->table('User')->get($userId);
+
+        if ($user === null) {
+            throw new InvalidArgumentException('User not found');
+        }
+
+        return $user;
+
+    }
+
     public function delete(int $userId): void
     {
         $user = $this->db->table('User')->get($userId);
