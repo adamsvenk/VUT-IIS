@@ -42,15 +42,33 @@
 <table>
 <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
-<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+<tr><td>doktor</td><td>doktor</td><td>Doktor</td></tr>
+<tr><td>pacient</td><td>pacient</td><td>Pacient</td></tr>
+<tr><td>pojistovak</td><td>pojistovak</td><td>Pracovník pojišťovny</td></tr>
 </table>
 
 <p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
 
 <h2>Implementace</h2>
 <p>Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.</p>
+<p>Implementace tohoto informačního systému je založena na architektuře Model - View - Presenter a frameworku Nette. Každá databázová tabulka (např. HealthProblem) má svůj vlastní model<br>
+(např. HealthProblemService.php) a stejně tak vlastní Presenter (např. HealthProblemPresenter.php), který určuje chování daného objektu a de facto propojuje FE část s BE částí.<br>
 
+</p>
+<table>
+<tr><th>Model</th><th>Presenter</th><th>Popis</th></tr>
+<tr><td></td><td>Error4xxPresenter.php</td><td>TODO</td></tr>
+<tr><td></td><td>ErrorPresenter.php</td><td>TODO</td></tr>
+<tr><td></td><td>HomepagePresenter.php</td><td>TODO</td></tr>
+<tr><td></td><td>SignPresenter.php</td><td>TODO</td></tr>
+<tr><td></td><td>LoggedPresenter.php</td><td>Základní presenter pro všechny presentery tohoto systému</td></tr>
+<tr><td>UserService.php</td><td>UserPresenter.php</td><td>Správa uživatelů</td></tr>
+<tr><td>ExaminationService.php</td><td>ExaminationPresenter.php</td><td>Správa žádostí o vyšetření (správa tiketů)</td></tr>
+<tr><td>HealthProblemService.php</td><td>HealthProblemPresenter.php</td><td>Správa záznamů o zdravotních problémech</td></tr>
+<tr><td>ProcedureService.php</td><td>ProcedurePresenter.php</td><td>Správa databáze placených zdravotních úkonů</td></tr>
+<tr><td>ProcedureRequestService.php</td><td>ProcedureRequestPresenter.php</td><td>Správa žádostí o proplacení zdravotních úkonů</td></tr>
+<tr><td>ReportService.php</td><td>ReportPresenter.php</td><td>Správa lékařských zpráv, které se vztahují ke zdravotnímu problému</td></tr>
+</table>
 <h3>Databáze</h3>
 
 Zde vložte grafické schéma relační databáze (tabulek v databázi).
