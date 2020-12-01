@@ -2,6 +2,9 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
+	display: flex;
+  	flex-direction: column;
+  	min-height: 100vh;
 }
 
 a[href^="#error:"] {
@@ -111,11 +114,8 @@ form .required label {
 }
 
 .footer {
-	position: absolute;
-	bottom: 0;
-	left: 10%;
-	right: 10%;
-	width: 80%;
+	height: 0 0 50px;
+  	margin-top: auto;
 	text-align: center;
 	font-size: medium;
 }
@@ -123,6 +123,7 @@ form .required label {
 .footer hr {
 	background-color: #028090;
 	height: 2px;
+	width: 80%;
 }
 
 .alert {
