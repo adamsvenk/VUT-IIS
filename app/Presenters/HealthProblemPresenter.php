@@ -38,6 +38,7 @@ class HealthProblemPresenter extends LoggedPresenter
         $this->allowedRoles([UserManager::ROLE_ADMIN, UserManager::ROLE_DOCTOR, UserManager::ROLE_PATIENT]);
         
         $this->template->healthProblems = $this->healthProblemService->getForUser($this->user->getId());
+        $this->template->examinationWithnoutDoctor = $this->healthProblemService->getExaminationWithoutDoctor($this->user->getId());
     }
 
     public function createComponentForm()

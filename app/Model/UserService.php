@@ -31,7 +31,7 @@ class UserService
     {
         $data = [];
 
-        $users = $this->db->table('User')->fetchAll();
+        $users = $this->db->table('User')->where(['is_deleted' => false])->fetchAll();
 
         foreach ($users as $user) {
             $data[] = [
@@ -74,7 +74,9 @@ class UserService
              $this->db->table('Health_problem')->where('patient_id', $userId)->delete();
         }
 
-        $this->db->table('User')->where('id', $userId)->delete();
+        $this->db->table('User')
+            ->where('id', $userId)
+            ->update(['is_deleted' => true]);
     }
 
     public function update(?int $id, stdClass $values)
@@ -146,7 +148,7 @@ class UserService
     {
         $data = [];
 
-        $users = $this->db->table('User')->where(['role' => $role])->fetchAll();
+        $users = $this->db->table('User')->where(['role' => $role, 'is_deleted' => false])->fetchAll();
 
         foreach ($users as $user) {
             $data[$user->id] = $user->Full_name;
@@ -165,5 +167,21 @@ class UserService
         } else {
             $user->update(['is_active' => 1]);
         }
+    }
+
+    public function deleteDoctor(int $doctorId, int $newDoctorId)
+    {
+        $doctor = $this->db->table('User')->get($doctorId);
+
+        //change responsible doctor
+        $this->db->table(HealthProblemService::HEALTH_PROBLEM_TABLE)
+            ->where(['doctor_id' => $doctorId])
+            ->update(['doctor_id' => $newDoctorId]);
+
+        $this->db->table(ExaminationService::EXAMINATION_TABLE)
+            ->where(['doctor_id' => $doctorId])
+            ->update(['doctor_id' => null]);
+
+        $doctor->update(['is_deleted' => true]);
     }
 }

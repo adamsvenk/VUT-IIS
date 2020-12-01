@@ -5,6 +5,11 @@
             <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
         </div>
         <hr>
+
+        {if $examinationWithnoutDoctor}
+            <p><b>Upozornění: </b> Zdravotní problém <b>{$examinationWithnoutDoctor}</b> obsahuje nedokončenou žádost o vyšetření, která není přiřazena žádnému lékaři (Lékař byl pravděpodobně vymazán)</p>
+        {/if}
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-custom">

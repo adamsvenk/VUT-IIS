@@ -9,7 +9,7 @@
             <div class="list-header">
                 <p><b>Stav: </b>{$stateMapping[$examination['State']]}</p>
                 {if $examination->State === 'in_progress'}
-                    (Varování: jakmile vyšetření dokončíte, nebude možné upravovat ani v kládat lékařské zprávy a žádosti o proplacení zdravotních úkonů)
+                    (Varování: jakmile vyšetření dokončíte, nebude možné upravovat, ani vkládat lékařské zprávy a žádosti o proplacení zdravotních úkonů)
                 {/if}
                 
                 {if $examination->State === 'waiting'}

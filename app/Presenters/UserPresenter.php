@@ -2,6 +2,7 @@
 
 namespace App\Presenters;
 
+use App\Model\HealthProblemService;
 use App\Model\UserManager;
 use App\Model\UserService;
 use Exception;
@@ -18,6 +19,12 @@ class UserPresenter extends LoggedPresenter
      * @inject
      */
     public $userService;
+
+    /**
+     * @var HealthProblemService
+     * @inject
+     */
+    public $healthProblemService;
 
     /** @var int|null */
     public $userId;
@@ -139,6 +146,40 @@ class UserPresenter extends LoggedPresenter
         $this->redirect('User:list');
     }
 
+    public function createComponentDeleteForm()
+    {
+        $form = new Form();
+
+        $doctors = $this->userService->getAllByRole(UserManager::ROLE_DOCTOR);
+        unset($doctors[$this->userId]);
+
+        $admins = $this->userService->getAllByRole(UserManager::ROLE_ADMIN);
+
+        $form->addSelect('doctor', 'Nový spravující lékař:')
+            ->setItems($doctors + $admins);
+
+        $form->onSuccess[] = [$this, 'deleteFormSuccess'];
+
+        $form->addSubmit('submit', 'Odstranit');
+
+        $form->onSuccess[] = [$this, 'formSuccess'];
+
+        return $form;
+    }
+
+    public function deleteFormSuccess(Form $form)
+    {
+        $this->userService->deleteDoctor($this->userId, $form->getValues()->doctor);
+        try {
+
+            $this->flashMessage('Lékař byl odstraněn', 'success');
+        } catch (Exception $e) {
+            $this->flashMessage('Lékaře se nepodařilo odstranit', 'danger');
+        }
+
+        $this->redirect('User:list');
+    }
+
     /**
      * @param int $userId
      * @throws AbortException
@@ -146,16 +187,25 @@ class UserPresenter extends LoggedPresenter
     public function actionDelete(int $userId): void
     {
         $this->allowedRoles([UserManager::ROLE_ADMIN]);
-        
-        try {
-            $this->userService->delete($userId);
 
-            $this->flashMessage('Uživatel byl smazán', 'success');
-        } catch (Exception $e) {
-            $this->flashMessage('Uživatele se nepodařilo vymazat', 'danger');
+        $user = $this->userService->get($userId);
+
+        if ($user->role !== UserManager::ROLE_DOCTOR) {
+            try {
+                $this->userService->delete($userId);
+
+                $this->flashMessage('Uživatel byl smazán', 'success');
+            } catch (Exception $e) {
+                $this->flashMessage('Uživatele se nepodařilo vymazat', 'danger');
+            }
+
+            $this->redirect('User:list');
+        } else {
+            $this->userId = $userId;
+
+            $this->template->userToDelete = $this->userService->get($userId);
+            $this->template->healthProblems = $this->healthProblemService->getForUser($userId);
         }
-
-        $this->redirect('User:list');
     }
 
     public function renderProfile()

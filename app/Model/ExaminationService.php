@@ -12,7 +12,7 @@ class ExaminationService
     public const STATE_IN_PROGRESS = 'in_progress';
     public const STATE_CLOSED = 'closed';
 
-    private const EXAMINATION_TABLE = 'Examination_request';
+    public const EXAMINATION_TABLE = 'Examination_request';
 
     /** @var Context */
     private $db;
@@ -35,7 +35,7 @@ class ExaminationService
                 'id' => $report->id,
                 'state' => self::getStateList()[$report->State],
                 'text' => $report->Text,
-                'doctorName' => $report->doctor->Full_name,
+                'doctorName' => $report->doctor ? $report->doctor->Full_name : '',
             ];
         }
 

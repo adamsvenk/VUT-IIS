@@ -13,7 +13,7 @@ class HealthProblemService
     public const STATE_WAITING = 'waiting';
     public const STATE_CLOSED = 'closed';
 
-    private const HEALTH_PROBLEM_TABLE = 'Health_problem';
+    public const HEALTH_PROBLEM_TABLE = 'Health_problem';
 
     /** @var Context */
     private $db;
@@ -147,5 +147,19 @@ class HealthProblemService
             self::STATE_WAITING => 'Čekající na vyšetření',
             self::STATE_CLOSED => 'Ukončený',
         ];
+    }
+
+    public function getExaminationWithoutDoctor(int $userId): ?string
+    {
+        $result = $this->db->query('select Hp.Name from Examination_request er
+            left join Health_problem Hp on er.health_problem_id = Hp.id
+            left join User U on Hp.doctor_id = U.id
+            where U.id=? and er.doctor_id IS NULL and er.State != \'closed\'',$userId)->fetchAll();
+
+        if (!empty($result)) {
+            return $result[0]->Name;
+        }
+
+        return null;
     }
 }
