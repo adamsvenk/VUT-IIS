@@ -47,7 +47,7 @@ class ProcedurePresenter extends LoggedPresenter
         $form->addInteger('price', 'Cena')
             ->setRequired('Cena procedury je povinná');
 
-        $form->addSubmit('submit');
+        $form->addSubmit('submit', 'Uložit');
 
         $form->onSuccess[] = [$this, 'formSuccess'];
 

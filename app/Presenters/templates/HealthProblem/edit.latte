@@ -6,18 +6,27 @@
         </div>
         <hr>
         <div>
+            <p style="color: red">Položky označené * jsou povinné</p>
             {form form}
                 <table>
                 <tr n:foreach="$form->controls as $name => $field">
                     {if $name != 'submit'}
-                        <th>{label $name /}<th>
+                        {if $name == "name"}
+                            <th>{label $name /} *<th>
+                        {else}
+                            <th>{label $name /}<th>
+                        {/if}
                         <td>{input $name}</td>
                     {/if}
                     <td n:ifcontent>{inputError $name}</td>
                 </tr>
                 <tr n:foreach="$form->controls as $name => $field">
                     {if $name == 'submit'}
-                        <th>{label $name /}<th>
+                        {if $name == "name"}
+                            <th>{label $name /} *<th>
+                        {else}
+                            <th>{label $name /}<th>
+                        {/if}
                         <td>{input $name}</td>
                     {/if}
                     <td n:ifcontent>{inputError $name}</td>

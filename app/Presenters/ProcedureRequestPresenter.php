@@ -52,7 +52,7 @@ class ProcedureRequestPresenter extends LoggedPresenter
             ->setItems($this->procedureService->getList())
             ->setRequired('Úkon je povinný');
 
-        $form->addSubmit('submit');
+        $form->addSubmit('submit', 'Uložiť');
 
         $form->onSuccess[] = [$this, 'formSuccess'];
 

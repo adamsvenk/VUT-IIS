@@ -6,7 +6,20 @@
         </div>
         <hr>
         <div>
-            {control createForm}
+            <p style="color: red">Položky označené * jsou povinné</p>
+            {form createForm}
+                <table>
+                <tr n:foreach="$form->controls as $name => $field">
+                    {if $name == "username" or $name == "password"}
+                        <th>{label $name /} *<th>
+                    {else}
+                        <th>{label $name /}<th>
+                    {/if}
+                    <td>{input $name}</td>
+                    <td n:ifcontent>{inputError $name}</td>
+                </tr>
+                </table>
+            {/form}
         </div>
     </div>
 {/block}

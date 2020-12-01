@@ -62,7 +62,7 @@ class UserPresenter extends LoggedPresenter
         $form->addText('function', 'Funkce')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka funkce je 45 znaků', 45);
 
-        $form->addSubmit('submit');
+        $form->addSubmit('submit', 'Uložit');
 
         $form->onSuccess[] = [$this, 'formSuccess'];
 

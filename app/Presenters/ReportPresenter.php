@@ -108,18 +108,18 @@ class ReportPresenter extends LoggedPresenter
         $form->addHidden('healthProblemId');
         $form->addHidden('reportId');
 
-        $form->addText('subject', 'Subject')
+        $form->addText('subject', 'Předmět')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka textu je 50 znaků.', 50)
-            ->setRequired('předmět je povinný');
+            ->setRequired('Předmět je povinný');
         
         $form->addTextArea('text', 'Text')
             ->addRule(Form::MAX_LENGTH, 'Maximální délka textu je 1000 znaků.', 1000)
-            ->setRequired('text je povinný');
+            ->setRequired('Text je povinný');
 
         $form->addUpload('picture', 'Obrázek')
             ->setRequired(false);
 
-        $form->addSubmit('submit');
+        $form->addSubmit('submit', 'Uložiť');
 
         $form->onSuccess[] = [$this, 'formSuccess'];
 
