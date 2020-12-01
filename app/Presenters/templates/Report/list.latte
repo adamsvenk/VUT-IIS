@@ -4,8 +4,8 @@
             <h3>Lékařské zprávy pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
         </div>
         <div class="list-header">
-            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
             <a class="button-edit" type="create" n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
         </div>
         <hr>
         <div class="table-responsive">

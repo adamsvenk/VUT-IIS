@@ -2,11 +2,13 @@
     <div class="list-content">
         <div class="list-header">
             <h2>Vytvořit nový zdravotní problém</h2>
+        </div>
+        <div class="list-header">
+            <a class="button-edit" n:href="User:createPatient">Přidat pacienta</a>
             <a class="button-edit" type="create" n:href="HealthProblem:list">zpět</a>
         </div>
         <hr>
         <div>
-            <a n:href="User:createPatient">Přidat pacienta</a>
             {form form}
                 <table>
                 <tr n:foreach="$form->controls as $name => $field">

@@ -4,8 +4,8 @@
             <h2>Žádosti o vyšetření pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h2>
         </div>
         <div class="list-header">
-            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
             <a class="button-edit" type="create" n:href="Examination:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+            <a class="button-edit" type="back" n:href="HealthProblem:list">Zpět</a>
         </div>
         <hr>
         <div class="table-responsive">
@@ -17,15 +17,17 @@
                     <th>Přiřazeno lékaři</th>
                     <th colspan="2" style="text-align:center">Akce</th>
                 <thead>
-                <tr n:foreach="$examinations as $examination">
-                    <td>{$examination['datetime']|truncate:18,''}</td>
-                    <td>{$examination['text']}</td>
-                    <td>{$examination['state']}</td>
-                    <td>{$examination['doctorName']}</td>
+                <tbody>
+                    <tr n:foreach="$examinations as $examination">
+                        <td>{$examination['datetime']|truncate:18,''}</td>
+                        <td>{$examination['text']}</td>
+                        <td>{$examination['state']}</td>
+                        <td>{$examination['doctorName']}</td>
 
-                    <td><a n:href="Examination:delete healthProblemId=>$healthProblemId, examinationId=>$examination['id']">smazat</a></td>
-                    <td><a n:href="Examination:edit healthProblemId=>$healthProblemId, examinationId=>$examination['id']">editovat</a></td>
-                </tr>
+                        <td><a n:href="Examination:delete healthProblemId=>$healthProblemId, examinationId=>$examination['id']">smazat</a></td>
+                        <td><a n:href="Examination:edit healthProblemId=>$healthProblemId, examinationId=>$examination['id']">editovat</a></td>
+                    </tr>
+                <tbody>
             </table>
         </div>
     </div>
