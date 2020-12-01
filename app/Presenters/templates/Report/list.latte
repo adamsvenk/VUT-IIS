@@ -4,7 +4,7 @@
             <h3>Lékařské zprávy pro {$healthProblem->Name} (Pacient {$healthProblem->patient->Full_name})</h3>
         </div>
         <div class="list-header">
-            <a class="button-edit" type="create" n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>
+            {if $isAdmin || $isDoctor}<a class="button-edit" type="create" n:href="Report:create healthProblemId=>$healthProblem->id">Vytvořit</a>{/if}
             <a class="button-edit" type="back" n:href="HealthProblem:list">zpět</a>
         </div>
         <hr>

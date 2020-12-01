@@ -2,7 +2,7 @@
     <div class="list-content">
         <div class="list-header">
             <h2>Zdravotní problémy</h2>
-            <a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>
+            {if $isAdmin || $isDoctor}<a class="button-edit" type="add" n:href="HealthProblem:create">Vytvořit</a>{/if}
         </div>
         <hr>
 
