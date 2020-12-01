@@ -53,7 +53,7 @@
 
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-						<a n:class="$presenter->isLinkCurrent('User:*') ? active, nav-link : nav-link" n:href="User:profile">Můj profil</a>
+						<a n:class="$presenter->isLinkCurrent('User:profile') ? active, nav-link : nav-link" n:href="User:profile">Můj profil</a>
 				</li>
 				<li class="nav-item">
 						<a class="nav-link" n:href="Sign:out">Odhlásit ({$user->getIdentity()->Full_name})</a>
