@@ -74,13 +74,29 @@
 <img src="database-schema.png" alt="database-schema">
 
 <h2>Instalace</h2>
-
-Stručně popište: 
+<h3>Požadavky</h3>
 <ul>
-<li>postup instalace na server,</li>
-<li>softwarové požadavky (verze PHP apod.),</li>
-<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
+	<li>Nainstalovaný nástroj makefile</li>
+	<li>Nainstalovaný a spuštění docker (spolu s nástrojem docker-compose)</li>
+	<li>Mít volný port 8080</li>
+	<li>Databáze MySQL, verze 5.7.32</li>
 </ul>
+<h3>Instalace databáze</h3>
+<ol>
+	<li>Vytvořit databázi s názvem <code>iis-database</code></li>
+	<li>Vytvořit uživatele se jménem <code>iis</code> a heslem <code>iis</code>, který bude mít k databázi všechna práva</li>
+	<li>Vytvořit strukturu databáze - SQL příkazy pro vytvoření databáze jsou v souboru <code>database/ddl.sql</code></li>
+	<li>Nahrát ukázková data - SQL příkazy s ukázkovými daty jsou v souboru <code>database/data.sql</code></li>
+</ol>
+<h3>Instalace systému</h3>
+<ol>
+	<li>Složky <code>log</code> a <code>temp</code> musí být zapisovatelné</li>
+	<li>Nastavení databáze: v soubor <code>app/confing.neon</code> je nutné do parametru <code>database.dsn</code> nastavit host, kde běží databáze. Pokud databáze běží na stejném stroji, měla by být hodnota <code>localhost</code>.
+	Celé nastavení databáze by v tom případě mělo vypadat takto:
+	</li>
+	<img src="database-config.png" alt="">
+	<li>Provedením příkazu <code>make run</code> se systém spustí a provede se instalace balíčků (využívá se composer, který je již předinstalovaný v docker obrazu)</li>
+</ol>
 
 </body>
 </html>
