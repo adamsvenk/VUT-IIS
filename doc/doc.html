@@ -50,17 +50,15 @@
 <p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
 
 <h2>Implementace</h2>
-<p>Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.</p>
+
 <p>Implementace tohoto informačního systému je založena na architektuře Model - View - Presenter a frameworku Nette. Každá databázová tabulka (např. HealthProblem) má svůj vlastní model<br>
 (např. HealthProblemService.php) a stejně tak vlastní Presenter (např. HealthProblemPresenter.php), který určuje chování daného objektu a de facto propojuje FE část s BE částí.<br>
 
 </p>
 <table>
 <tr><th>Model</th><th>Presenter</th><th>Popis</th></tr>
-<tr><td></td><td>Error4xxPresenter.php</td><td>TODO</td></tr>
-<tr><td></td><td>ErrorPresenter.php</td><td>TODO</td></tr>
-<tr><td></td><td>HomepagePresenter.php</td><td>TODO</td></tr>
-<tr><td></td><td>SignPresenter.php</td><td>TODO</td></tr>
+<tr><td></td><td>Error4xxPresenter.php<br>ErrorPresenter.php</td><td>Pomocné presentery pro zpracování chyb</td></tr>
+<tr><td></td><td>SignPresenter.php</td><td>Přihlášení a odhlášení</td></tr>
 <tr><td></td><td>LoggedPresenter.php</td><td>Základní presenter pro všechny presentery tohoto systému</td></tr>
 <tr><td>UserService.php</td><td>UserPresenter.php</td><td>Správa uživatelů</td></tr>
 <tr><td>ExaminationService.php</td><td>ExaminationPresenter.php</td><td>Správa žádostí o vyšetření (správa tiketů)</td></tr>
